@@ -1,2 +1,2 @@
-# HostFinder---accommodation-finder
+# HostFinder-accommodation-finder
 A online accommodation finder website.
