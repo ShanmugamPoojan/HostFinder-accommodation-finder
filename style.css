@@ -1,0 +1,107 @@
+*{
+    margin: 0px;
+    padding: 0px;
+
+    box-sizing: border-box;
+
+    font-family:"SUSE", sans-serif;
+
+    scroll-behavior: smooth;
+}
+a{
+    text-decoration: none;
+    text-transform: none;
+}
+#logo{
+    font-size: 40px;
+    font-weight: bolder;
+
+    color: white;
+}
+nav{
+    margin: 10px;
+    padding: 20px;
+
+    display: flex;
+    justify-content: space-between;
+
+    border: 2px solid black;
+    border-radius: 20px;
+
+    background-color: black;
+
+    position: sticky;
+    top: 0;
+    right: 0;
+}
+nav > ul{
+
+    list-style-type: none;
+    display: flex;
+    
+}
+nav li{
+    margin: 10px;
+    padding: 10px; 
+
+    border: 2px solid white;
+    border-radius: 10px;
+}
+nav li:hover{
+    background-color: darkgrey;
+}
+nav a{
+    color: white;
+}
+
+#search-div{
+    margin: 10px;
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+
+    background-color: lightgray;
+}
+#search-box{
+    padding: 0 10px;
+
+    width: 50vw;
+    height: 40px;
+
+    border: 1px solid gray;
+    border-radius: 20px;
+}
+#search-box:active{
+    border: none;
+}
+
+/* ********************************************************* */
+main{
+    margin: 0px 10vw;
+    /* padding: 10px */
+}
+main div{
+    margin: 10px;
+    height: 500px;
+    border: 2px solid black;
+}
+/* ********************************************************* */
+footer div{
+    padding: 20px;
+
+    background-color: yellow;
+
+    align-items: center;
+}
+#back-to-top{    
+    background-color: gray;
+
+    font-weight: bold;
+}
+#back-to-top:hover{
+    background-color: darkgray;
+}
+footer div p{
+    text-align: center;
+}
