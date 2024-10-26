@@ -5,9 +5,13 @@
     box-sizing: border-box;
 }
 body {
-    font-family: Arial, sans-serif;
+    font-family: "SUSE", sans-serif;
 }
 /* Navigation Bar */
+#logo{
+    font-weight: bolder;
+    font-size: 50px;
+}
 .navbar {
     background-color: #333;
     color: #fff;
@@ -15,12 +19,16 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 10000;
 }
 .navbar a {
     color: #fff;
     text-decoration: none;
     padding: 8px 16px;
-    font-size: 1rem;
+    font-size: large;
 }
 .navbar a:hover {
     background-color: #555;
@@ -28,12 +36,32 @@ body {
 }
 /* Hero Section */
 .hero {
-    background-color: #f4f4f4;
+    height: 50vh;
     padding: 50px 20px;
+    margin-bottom: 30px;
+
+    background-image: url(images/hero1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #f4f4f4;
     text-align: center;
+    /* border-radius: 20px; */
+}
+#roomate-finder{
+    height: 40vh;
+    width: 80vw;
+    margin: 10px auto;
+    padding: 50px 20px;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #f4f4f4;
+    text-align: center;
+    background-image: url(images/roomate3.jpg);
+    border-radius: 50px;
 }
 .hero h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 10px;
 }
 .hero p {
@@ -41,6 +69,20 @@ body {
     color: #666;
     max-width: 600px;
     margin: auto;
+}
+#roomate-finder p{
+    color: #000;
+}
+#search-bar{
+    margin: 20px;
+    padding: 15px 20px;
+    /* height: 50px; */
+    width: 50vw;
+
+    font-size: large;
+
+    border: none;
+    border-radius: 100px;
 }
 /* Main Content */
 .accommodations {
@@ -83,9 +125,11 @@ body {
     background-color: #333;
     color: #fff;
     text-align: center;
-    padding: 15px;
+    padding: 50px;
     margin-top: 30px;
+    /* height: 200px; */
 }
+
 /* Modal for Login/Register */
 .modal {
     display: none;
@@ -145,6 +189,9 @@ body {
 
 /* Responsive styling */
 @media (max-width: 768px) {
+    #logo{
+        font-size: 30px;
+    }
     .navbar {
         flex-direction: column;
         align-items: flex-start;
@@ -154,7 +201,7 @@ body {
         padding: 10px;
         font-size: 0.9rem;
     }
-    .hero h1 {
+    .hero h1,h2{
         font-size: 2rem;
     }
     .hero p {
@@ -170,7 +217,7 @@ body {
 }
 
 @media (max-width: 480px) {
-    .hero h1 {
+    .hero h1,h2{
         font-size: 1.5rem;
     }
     .hero p {

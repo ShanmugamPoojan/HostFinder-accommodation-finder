@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HostFinder - Find Your Perfect Accommodation</title>
+    <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <!-- Navigation Bar -->
     <div class="navbar">
-        <a href="#">HostFinder</a>
+        <a href="#" id="logo">HostFinder</a>
         <div>
-            <a href="#home">Home</a>
-            <a href="#contact">Contact</a>
+            <a href="#nav">Home</a>
+            <a href="#footer">Contact</a>
             <a href="#" id="profileButton">Profile</a>
         </div>
     </div>
@@ -22,12 +25,21 @@
     <section class="hero" id="home">
         <h1>Welcome to HostFinder</h1>
         <p>Find the perfect place to stay from our extensive list of accommodations tailored to meet your needs.</p>
+        <form action="">
+            <input type="text" placeholder="Search location" id="search-bar">
+        </form>
     </section>
 
+    <section class="hero" id="roomate-finder">
+        <h1>Looking for a roomate?</h1>
+        <h2>We got you coverde.</h2>
+        <p>Find a compatible roommates or housemates based on preferences and lifestyle.</p>
+        <button>Roomate finder -></button>
+    </section>
     <!-- Accommodation Listings -->
     <section class="accommodations">
         <div class="accommodation-card">
-            <img src="#" alt="Accommodation 1" style="width:300px; height:200px;">
+            <img src="images/room1.jpg" alt="Accommodation 1" style="width:300px;">
             <div class="details">
                 <h3>Accommodation 1</h3>
                 <p>Click to view more details.</p>
@@ -35,9 +47,73 @@
         </div>
 
         <div class="accommodation-card">
-            <img src="#" alt="Accommodation 2" style="width:300px; height:200px;">
+            <img src="images/room1.jpg" alt="Accommodation 2" style="width:300px;">
             <div class="details">
                 <h3>Accommodation 2</h3>
+                <p>Click to view more details.</p>
+            </div>
+        </div>
+
+        <div class="accommodation-card">
+            <img src="images/room1.jpg" alt="Accommodation 3" style="width:300px;">
+            <div class="details">
+                <h3>Accommodation 3</h3>
+                <p>Click to view more details.</p>
+            </div>
+        </div>
+
+        <div class="accommodation-card">
+            <img src="images/room1.jpg" alt="Accommodation 4" style="width:300px;">
+            <div class="details">
+                <h3>Accommodation 4</h3>
+                <p>Click to view more details.</p>
+            </div>
+        </div>
+
+        <div class="accommodation-card">
+            <img src="images/room1.jpg" alt="Accommodation 5" style="width:300px;">
+            <div class="details">
+                <h3>Accommodation 5</h3>
+                <p>Click to view more details.</p>
+            </div>
+        </div>
+
+        <div class="accommodation-card">
+            <img src="images/room1.jpg" alt="Accommodation 6" style="width:300px;">
+            <div class="details">
+                <h3>Accommodation 6</h3>
+                <p>Click to view more details.</p>
+            </div>
+        </div>
+
+        <div class="accommodation-card">
+            <img src="images/room1.jpg" alt="Accommodation 7" style="width:300px;">
+            <div class="details">
+                <h3>Accommodation 7</h3>
+                <p>Click to view more details.</p>
+            </div>
+        </div>
+
+        <div class="accommodation-card">
+            <img src="images/room1.jpg" alt="Accommodation 8" style="width:300px;">
+            <div class="details">
+                <h3>Accommodation 8</h3>
+                <p>Click to view more details.</p>
+            </div>
+        </div>
+
+        <div class="accommodation-card">
+            <img src="images/room1.jpg" alt="Accommodation 9" style="width:300px;">
+            <div class="details">
+                <h3>Accommodation 9</h3>
+                <p>Click to view more details.</p>
+            </div>
+        </div>
+
+        <div class="accommodation-card">
+            <img src="images/room1.jpg" alt="Accommodation 10" style="width:300px;">
+            <div class="details">
+                <h3>Accommodation 10</h3>
                 <p>Click to view more details.</p>
             </div>
         </div>
@@ -62,10 +138,13 @@
 
     <!-- Footer -->
     <footer class="footer">
+        <p>Designed and developed by suman_s :)</p>
+        <br>
         <p>&copy; 2024 HostFinder. All rights reserved.</p>
     </footer>
 
     <script src="script.js">
     </script>
 </body>
+
 </html>
