@@ -1,48 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HostFinder - Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&amp;display=swap" rel="stylesheet">
+    <title>HostFinder - Find Your Perfect Accommodation</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <nav>
-        <p id="logo">HostFinder</p>
-        <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">Contact</a></li>
-            <li><a href="">Profile</a></li>
-        </ul>
-    </nav>
-    <header>
-        <div id="search-div">
-            <form action="">
-                <input type="text" placeholder="Search location" id="search-box">
-            </form>
-        </div>
-    </header>
 
-    <main>
-        <div></div>
-        <div></div>
-        <div></div>
-    </main>
-    <footer>
-        <a href="#nav">
-            <div id="back-to-top">
-                <p>Back to top</p>
-            </div>
-        </a>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="#">HostFinder</a>
         <div>
-            <p>@suman_s </p>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto atque ducimus maiores fugiat neque
-                quae eius libero illo illum obcaecati!</p>
+            <a href="#home">Home</a>
+            <a href="#contact">Contact</a>
+            <a href="#" id="profileButton">Profile</a>
         </div>
-    </footer>
-</body>
+    </div>
 
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Welcome to HostFinder</h1>
+        <p>Find the perfect place to stay from our extensive list of accommodations tailored to meet your needs.</p>
+    </section>
+
+    <!-- Accommodation Listings -->
+    <section class="accommodations">
+        <div class="accommodation-card">
+            <img src="#" alt="Accommodation 1" style="width:300px; height:200px;">
+            <div class="details">
+                <h3>Accommodation 1</h3>
+                <p>Click to view more details.</p>
+            </div>
+        </div>
+
+        <div class="accommodation-card">
+            <img src="#" alt="Accommodation 2" style="width:300px; height:200px;">
+            <div class="details">
+                <h3>Accommodation 2</h3>
+                <p>Click to view more details.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login or Register</h2>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profilePage" class="profile-page">
+        <h2>Welcome, <span id="userEmail"></span></h2>
+        <p>Your profile details go here.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 HostFinder. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js">
+    </script>
+</body>
 </html>
