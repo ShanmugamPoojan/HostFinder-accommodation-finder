@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+
+    <title>Roommate Finder</title>
+    <link rel="stylesheet" href="roommate-style.css">
+
+</head>
+
+<body>
+    <main id="bg">
+
+        <div id="logobar">
+            <p><a href="#" id="logo">RoommateFinder</a></p>
+        </div>
+        <div class="navbar">
+            <div>
+                <a href="index.html">HostFinder</a>
+                <a href="#logobar">Home</a>
+                <a href="#footer">Contact</a>
+                <a href="#" onclick="openLoginModal()">Profile</a>
+            </div>
+        </div>
+
+        <div style="text-align: center; color:#333;">
+            <h1>Suggessions</h1>
+        </div>
+        <div class="roommates">
+            <!-- Roommate cards dynamically added here -->
+        </div>
+
+        <!-- Roommate Details Modal -->
+        <div id="roommateModal" class="modal">
+            <div class="modal-content">
+                <div class="close" onclick="closeRoommateModal()">&times;</div>
+                <div class="modal-body">
+                    <!-- Image -->
+                    <div class="image-section">
+                        <img id="roommateImage" src="" alt="Roommate Image">
+                    </div>
+
+                    <!-- Details -->
+                    <div class="details-section">
+                        <h2 id="roommateName"></h2><hr>
+                        <p><strong>Age:</strong> <span id="roommateAge"></span></p>
+                        <p><strong>Gender:</strong> <span id="roommateGender"></span></p>
+                        <p><strong>Profession:</strong> <span id="roommateProfession"></span></p>
+                        <p><strong>Room Sharing:</strong> <span id="roommateRoomSharing"></span></p>
+                        <p><strong>Location:</strong> <span id="roommateLocation"></span></p>
+                        <p><strong>Description:</strong> <span id="roommateDescription"></span></p>
+                        <p><strong>Requirements:</strong> <span id="roommateRequirements"></span></p>
+                        <p><strong>Contact:</strong> <span id="roommateContact"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- More roommate cards as needed -->
+        </section>
+           
+        <!-- Profile Modal -->
+        <div id="loginModal" class="modal">
+            <div class="login-modal-content">
+                <span class="close">&times;</span>
+                <h2>User Login</h2>
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <!-- <select id="loginRole">
+                    <option value="user">User</option>
+                    <option value="owner">Owner</option>
+                </select> -->
+                <button onclick="login()">Login</button>
+                <p>Not registered? <a href="#" onclick="openRegisterModal()">Register here</a></p>
+            </div>
+        </div>
+
+        <!-- Register Modal -->
+        <div id="registerModal" class="modal">
+            <div class="login-modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>User Register</h2>
+                <input type="email" id="registerEmail" placeholder="Email" required>
+                <input type="password" id="registerPassword" placeholder="Password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <button onclick="register()">Register</button>
+                <p>Already have an account? <a href="#" onclick="openLoginModal()">Login here</a></p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer id="footer">
+        <p><b>Contact us:</b><br>
+            <u>Email</u><br>
+            <u>Facebook</u><br>
+            <u>Instagram</u><br>
+            <u>Twitter</u>
+        </p><br>
+        <p>Designed and developed by suman_s :)</p>
+        <br>
+        <p>&copy; 2024 HostFinder. All rights reserved.</p>
+    </footer>
+
+    <script src="roommate-script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,619 @@
+:root{
+    --primary: #333;
+    --hover: #555;
+    --text: #555;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    scroll-behavior: smooth;
+}
+body {
+    font-family: "SUSE", sans-serif;
+}
+a{
+    text-decoration: none;
+    text-transform: none;
+    color: #fff;
+}
+#bg{
+    /* padding-bottom: 50px; */
+    /* width: 100vw; */
+    background: linear-gradient(to top, #dfe9f3 0%, white 100%);
+    /* background-image: url(images/hero3.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; */
+}
+/* Navigation Bar */
+#logo{
+    font-weight: bolder;
+    font-size: 50px;
+}
+#logobar{
+    margin: auto;
+    border-radius: 0 0 100px 100px;
+    width: 60vw;
+    background-color: var(--primary);
+    color: #fff;
+    padding: 10px 20px;
+    font-size: large;
+}
+#logobar p{
+    text-align: center;
+}
+.navbar {
+    margin:  5px auto;
+    padding: 20px;
+    border-radius: 20px;
+    width: 50vw;
+    background-color: var(--primary);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 10px;
+    left: 0;
+    z-index: 10000;
+}
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    font-size: large;
+}
+.navbar a:hover {
+    background-color: var(--hover);
+    border-radius: 5px;
+}
+
+/* Hero Section */
+.hero {
+    /* height: 60vh; */
+    padding: 50px 20px;
+    /* padding-top: 0; */
+    margin-bottom: 30px;
+
+    background-image: url(images/hero1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #f4f4f4;
+    text-align: center;
+    /* border-radius: 20px; */
+}
+#roomate-finder{
+    /* height: 40vh;
+    width: 80vw;
+    margin: 10px auto;
+    padding: 50px 20px; */
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #f4f4f4;
+    text-align: center;
+    background-image: url(images/hero6.jpg);
+    /* border-radius: 50px; */
+}
+#hero-carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100vw;
+    margin: auto;
+}
+
+.hero-sections {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%; /* To fit both hero sections side by side */
+}
+
+.hero {
+    flex: 0 0 100%; /* Each section takes full width */
+    height: 60vh;
+}
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 5;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.hero h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+.hero p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin: auto;
+}
+#roomate-finder p{
+    color: #000;
+}
+#search-bar{
+    margin: 20px;
+    padding: 15px 20px;
+    /* height: 50px; */
+    width: 50vw;
+
+    font-size: large;
+
+    border: none;
+    border-radius: 100px;
+}
+
+.button {
+    /* width: 150px; */
+    color: #fff;
+    background-color: #868686;
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 8px 16px;
+    font-size: large;
+}
+.button:hover {
+    background-color: var(--hover);
+}
+/* Filter Section */
+.filter-section {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.filter-section h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.filter-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-section label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.filter-section select,
+.filter-section input[type="checkbox"],
+.filter-section button {
+    margin: 5px 0;
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.filter-section button {
+    width: fit-content;
+    align-self: center;
+}
+
+/* Style the checkbox buttons */
+.checkbox-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.checkbox-button {
+    padding: 10px 15px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.checkbox-button.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+
+/* Main Content */
+.accommodations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+.accommodation-card {
+    background-color: #fff;
+    width: 400px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.accommodation-card:hover {
+    transform: scale(1.05);
+}
+.accommodation-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.accommodation-card .details {
+    padding: 15px;
+    text-align: center;
+}
+.accommodation-card h3 {
+    font-size: 1.5rem;
+}
+.accommodation-card p {
+    color: var(--text);
+    margin: 5px;
+
+}
+
+/* .facilities-list li:hover {
+    transform: scale(1.1);
+    background-color: #ddd;
+} */
+
+/* Accommodation Details Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    /* width: 80vw; */
+    max-width: 800px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    display: flex;
+    gap: 20px;
+}
+
+.image-gallery {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-gallery img#accommodationImage {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.image-thumbnails {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.image-thumbnails .thumbnail {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: transform 0.2s;
+}
+
+.image-thumbnails .thumbnail:hover {
+    transform: scale(1.05);
+}
+
+.details-section {
+    width: 50%;
+}
+
+.details-section h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.details-section p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: var(--text);
+}
+
+/* Facilities List Styling */
+.facilities-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.facilities-list li {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e0e0e0;
+    border: 1px solid #ddd;
+    border-radius: 10%;
+    /* width: 60px; */
+    /* height: 60px; */
+    padding: 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    cursor: default;
+    /* transition: transform 0.2s ease; */
+}
+
+#about{
+    padding: 80px 20px;
+}
+#about > div{
+    margin: 10px;
+    height: 400px;
+    display: flex;
+    
+    background-color: #fff;
+    /* border: 2px solid black; */
+    box-shadow: 0 0 10px gray;
+}
+#about p{
+    text-align: justify;
+}
+#host-about{
+    border-radius: 0 100px 0 0;
+}
+#roommate-about{
+    border-radius: 0 0 0 100px;
+
+}
+.about-image{
+    width: 40%;
+}
+.about-image>img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.about-info{
+    padding:30px;
+    width: 60%;
+}
+
+/* Footer */
+#footer {
+    background-color: var(--primary);
+    color: #fff;
+    text-align: center;
+    padding: 50px;
+    /* margin-top: 30px; */
+    /* height: 200px; */
+}
+
+ /* Modal for Login/Register  */
+
+.login-modal-content {
+    background-color: #fff;
+    margin:10% auto;
+    padding: 20px;
+    width: 500px;
+    border-radius: 10px;
+    text-align: center;
+} 
+
+.login-modal-content h2 {
+    margin-bottom: 10px;
+}
+.login-modal-content p {
+    margin: 10px 0;
+}
+.login-modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.login-modal-content button {
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.login-modal-content button:hover {
+    background-color: #aaa;
+   
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: end;
+}
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Profile Page */
+.profile-page {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+.profile-page h2 {
+    margin-bottom: 10px;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    #logo{
+        font-size: 30px;
+    }
+    .navbar {
+        width: 80vw;
+    }
+    .navbar a {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    .hero h1,h2{
+        font-size: 2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .accommodation-card {
+        width: 100%;
+        max-width: 300px;
+    }
+    .modal-content {
+        width: 90%;
+    }
+    .modal-content {
+        width: 90vw;
+        max-width: 90vw;
+    }
+
+    .modal-body {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .image-gallery, .details-section {
+        width: 100%;
+        text-align: center;
+    }
+
+    .image-gallery img#accommodationImage {
+        /* width: 80%; */
+        height: auto;
+        max-height: 250px;
+    }
+
+    .image-thumbnails {
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+
+    .image-thumbnails .thumbnail {
+        width: 60px;
+        height: 45px;
+    }
+
+    .details-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .details-section p, .facilities-list li {
+        font-size: 0.9rem;
+    }
+    #about{
+        margin: 0;
+        padding: 0;
+    }
+    #about > div {
+        flex-direction: column; /* Stack content vertically */
+        height: auto; /* Adjust height automatically */
+        border-radius: 0; /* Remove specific border-radius for a simpler look */
+    }
+
+    .about-image {
+        width: 100%; /* Make the image take full width */
+        height: 200px; /* Limit the height for smaller screens */
+    }
+
+    .about-image > img {
+        height: 100%; /* Ensure the image scales correctly */
+    }
+
+    .about-info {
+        width: 100%; /* Make the text content take full width */
+        padding: 20px; /* Reduce padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    
+    .hero h1,h2{
+        font-size: 1.5rem;
+    }
+    .hero p {
+        font-size: 0.9rem;
+    }
+    .navbar a {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+    .login-modal-content {
+        margin:30% auto;
+    } 
+    #about{
+        margin: 0;
+        padding: 0;
+    }
+    #about p {
+        font-size: 0.9rem; /* Adjust font size for readability */
+        padding: 5px;
+    }
+
+    .about-image {
+        height: 150px; /* Further reduce image height */
+    }
+
+    .about-info h1 {
+        font-size: 1.5rem; /* Adjust heading size */
+    }
+
+    .about-info {
+        padding: 15px;
+    }
+}

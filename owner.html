@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="owner-style.css">
+</head>
+<body>
+    <main id="bg">
+        <!-- Navigation Bar -->
+
+        <div id="logobar">
+            <p><a href="#" id="logo">HostFinder</a></p>
+        </div>
+        <div class="navbar">
+            <div>
+                <a href="index.html">Home</a>
+                <a href="#footer">Contact</a>
+                <a href="#" onclick="openLoginModal()">Login in</a>
+            </div>
+        </div>
+        <!-- <h1>Welcome, Owner</h1> -->
+        <div id="accommodations">
+
+        </div>
+        
+        <!-- Profile Modal -->
+        <div id="loginModal" class="modal">
+            <div class="login-modal-content">
+                <span class="close">&times;</span>
+                <h2>Owner Login</h2>
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <!-- <select id="loginRole">
+                    <option value="user">User</option>
+                    <option value="owner">Owner</option>
+                </select> -->
+                <button onclick="login()">Login</button>
+                <p>Not registered? <a href="#" onclick="openRegisterModal()">Register here</a></p>
+            </div>
+        </div>
+
+        <!-- Register Modal -->
+        <div id="registerModal" class="modal">
+            <div class="login-modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Owner Register</h2>
+                <input type="email" id="registerEmail" placeholder="Email" required>
+                <input type="password" id="registerPassword" placeholder="Password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <button onclick="register()">Register</button>
+                <p>Already have an account? <a href="#" onclick="openLoginModal()">Login here</a></p>
+            </div>
+        </div>
+
+    </main>
+    <footer id="footer">
+        <p><b>Contact us:</b><br>
+            <u>Email</u><br>
+            <u>Facebook</u><br>
+            <u>Instagram</u><br>
+            <u>Twitter</u>
+        </p><br>
+        <p>Designed and developed by suman_s :)</p>
+        <br>
+        <p>&copy; 2024 HostFinder. All rights reserved.</p>
+    </footer>
+    
+    <script src="owner-script.js"></script>
+</body>
+</html>

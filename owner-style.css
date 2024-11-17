@@ -1,0 +1,153 @@
+:root{
+    --primary: #333;
+    --hover: #555;
+    --text: #555;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    scroll-behavior: smooth;
+}
+body {
+    font-family: "SUSE", sans-serif;
+}
+
+#bg{
+    background: linear-gradient(to top, #dfe9f3 0%, white 100%);
+}
+a{
+    text-decoration: none;
+    text-transform: none;
+}
+/* Navigation Bar */
+#logo{
+    font-weight: bolder;
+    font-size: 50px;
+    color: #fff;
+
+}
+#logobar{
+    margin: auto;
+    border-radius: 0 0 100px 100px;
+    width: 60vw;
+    background-color: var(--primary);
+    color: #fff;
+    padding: 10px 20px;
+}
+#logobar p{
+    text-align: center;
+}
+.navbar {
+    margin:  5px auto;
+    padding: 20px;
+    border-radius: 20px;
+    width: 50vw;
+    background-color: var(--primary);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 10px;
+    left: 0;
+    z-index: 10;
+}
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    font-size: large;
+}
+.navbar a:hover {
+    background-color: var(--hover);
+    border-radius: 5px;
+}
+
+ /* Modal for Login/Register  */
+ .modal {
+    display: none;
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    /* width: 80vw; */
+    max-width: 800px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    display: flex;
+    gap: 20px;
+}
+
+.login-modal-content {
+    background-color: #fff;
+    margin:10% auto;
+    padding: 20px;
+    width: 500px;
+    border-radius: 10px;
+    text-align: center;
+} 
+
+.login-modal-content h2 {
+    margin-bottom: 10px;
+}
+.login-modal-content p {
+    margin: 10px 0;
+}
+.login-modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.login-modal-content button {
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.login-modal-content button:hover {
+    background-color: #aaa;
+   
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: end;
+}
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Footer */
+#footer {
+    background-color: var(--primary);
+    color: #fff;
+    text-align: center;
+    padding: 50px;
+    /* margin-top: 30px; */
+    /* height: 200px; */
+}
