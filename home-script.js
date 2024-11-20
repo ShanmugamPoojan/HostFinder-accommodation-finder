@@ -16,6 +16,58 @@ function showPrevious() {
     heroSections.style.transform = `translateX(-${currentIndex * 100}%)`;
 }
 
+
+function searchAccommodation(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const searchInput = document.getElementById('accommodationSearchInput').value;
+    const searchResults = document.getElementById('accommodationSearchResults');
+
+    // Clear previous results
+    searchResults.innerHTML = '';
+
+    // Fetch data from the server
+    fetch(`http://localhost:3000/api/admin/accommodation?query=${encodeURIComponent(searchInput)}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.length === 0) {
+                searchResults.innerHTML = '<p>No accommodations found.</p>';
+                return;
+            }
+
+            // Display results
+            data.forEach(accommodation => {
+                const pictures = Array.isArray(accommodation.pictures)
+                    ? accommodation.pictures
+                    : JSON.parse(accommodation.pictures || '[]');
+
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                    <img src="${pictures[0] || 'images/default.jpg'}" alt="${accommodation.accommodation_name}"><br>
+                    <h3>${accommodation.accommodation_name}</h3>
+                    <p><strong>Location:</strong> ${accommodation.location}</p>
+                    <p><strong>Price :</strong> ₹${accommodation.price} per room</p>
+                    <p><strong>Gender preference:</strong> ${accommodation.gender_preference}</p>
+                    <p><strong>Food Type:</strong> ${accommodation.food_type}</p>
+                    <p><strong>Total Rooms:</strong> ${accommodation.total_rooms}</p>
+                    <p><strong>Room Sharing:</strong> ${accommodation.room_sharing}</p>
+                    <p><strong>Bathroom:</strong> ${accommodation.bathroom}</p>
+                `;
+                searchResults.appendChild(card);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching accommodations:', error);
+            searchResults.innerHTML = '<p>Error fetching accommodations. Please try again later.</p>';
+        });
+}
+
 // function toggleCheckbox(element) {
 //     // Toggle the 'selected' class
 //     element.classList.toggle("selected");
@@ -63,7 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.innerHTML = `
                     <img src="${pictures[0] || 'images/default.jpg'}" alt="${accommodation.accommodation_name}">
                     <h3>${accommodation.accommodation_name}</h3>
-                    <p><b>Location: </b>${accommodation.location}</p><br>
+                    <p><b>Location: </b>${accommodation.location}</p>
+                    <p><b>Price: </b> ₹${accommodation.price} per room </p><br>
                     <p><u>Click for more details</u></p>
                 `;
 
@@ -121,10 +174,12 @@ function openAccommodationModal(data) {
     // Populate accommodation details
     document.getElementById('accommodationName').textContent = data.accommodation_name || 'No Name Available';
     document.getElementById('accommodationLocation').textContent = `Location: ${data.location || 'Unknown'}`;
+    document.getElementById('accommodationPrice').textContent = data.price || 'Unknown';
     document.getElementById('accommodationDescription').textContent = data.description || 'No Description Available';
     document.getElementById('accommodationRooms').textContent = data.total_rooms || 'N/A';
-    document.getElementById('genderPreference').textContent = data.gender_preference || 'N/A';
-    document.getElementById('foodType').textContent = data.food_type || 'N/A';
+    document.getElementById('genderPreference').textContent = data.gender_preference.toUpperCase() || 'N/A';
+    document.getElementById('foodType').textContent = data.food_type.toUpperCase() || 'N/A';
+    document.getElementById('restrictions').textContent = data.restrictions || 'N/A';
 
     // Populate room sharing
     const roomSharingContainer = document.getElementById('roomSharing');
@@ -145,16 +200,40 @@ function openAccommodationModal(data) {
         listItem.textContent = facility.charAt(0).toUpperCase() + facility.slice(1);
         facilitiesList.appendChild(listItem);
     });
-
+    
+    const contactButton = document.querySelector('.contact-button .button');
+    contactButton.onclick = () => showOwnerDetails(data.accommodation_id, data.contact);
+    
     // Show the modal
     document.getElementById('accommodationModal').style.display = 'block';
+
 }
+
+function showOwnerDetails(accommodationId, contact) {
+    fetch(`http://localhost:3000/api/owner/details/${accommodationId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const ownerEmail = data.email || "Not available";
+            const ownerContact = contact || "Not available";
+
+            alert(`Owner Email: ${ownerEmail}\nOwner Contact: ${ownerContact}`);
+        })
+        .catch(error => {
+            console.error("Error fetching owner details:", error);
+            alert("Failed to load owner details.");
+        });
+}
+
 
 
 function closeModal() {
     document.getElementById('accommodationModal').style.display = 'none';
 }
-
 
 // Add event listeners to all elements with the "close" class
 document.addEventListener('DOMContentLoaded', () => {

@@ -8,7 +8,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
+    font-family: "SUSE", sans-serif;
+    
     scroll-behavior: smooth;
 }
 
@@ -127,14 +128,6 @@ a{
 }
 
 .modal-content {
-    /* background-color: #FFF;
-    border-radius: 10px;
-    margin: 50px auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 600px;
-    position: relative; */
-
     background-color: #fff;
     margin: 10% auto;
     padding: 20px;
@@ -156,6 +149,7 @@ a{
 .image-section {
     display: flex;
     justify-content: center;
+    width: 50%;
 }
 
 .image-section img {
@@ -170,6 +164,8 @@ a{
 /* Details Section */
 .details-section {
     text-align: left;
+    width: 50%;
+    /* width: 500px; */
 }
 
 .details-section h2 {
@@ -179,7 +175,7 @@ a{
 }
 
 .details-section p {
-    margin: 5px 0;
+    margin: 10px 0;
     font-size: 1rem;
 }
 
@@ -222,6 +218,118 @@ a{
    
 }
 
+/* Roommate Request Section */
+#userRoommateRequest {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+}
+
+.request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.request-header h2 {
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.edit-button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+
+.request-details {
+    line-height: 1.6;
+}
+.request-details div{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.request-details p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+#editRequestForm {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#editRequestForm input,
+#editRequestForm select,
+#editRequestForm textarea,
+#editRequestForm button {
+    margin: 5px 0;
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#editRequestForm textarea {
+    resize: none;
+}
+/* Checkbox Container */
+.checkbox-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.checkbox-button {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.checkbox-button:hover {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+}
+
+.checkbox-button input {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+#editRequestForm button {
+    background-color: #28a745;
+    /* margin: 10px 0; */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#editRequestForm button:hover {
+    background-color: #218838;
+}
+
 .close {
     color: #aaa;
     float: right;
@@ -241,30 +349,128 @@ a{
     color: #fff;
     text-align: center;
     padding: 50px;
-    /* margin-top: 30px; */
-    /* height: 200px; */
 }
-/* Responsive Design */
+/* Media Queries */
+
+/* For screens smaller than 1024px (Tablet and below) */
 @media (max-width: 768px) {
-    .modal-content {
-        width: 95%;
+    #logo {
+        font-size: 40px;
     }
 
-    .details-section p {
+    .navbar a {
         font-size: 0.9rem;
+        padding: 5px 8px;
     }
 
     .roommate-card img {
-        height: 120px;
+        height: 250px; 
+    }
+
+    .modal-content {
+        width: 95%; 
+    }
+
+    .modal-body {
+        flex-direction: column;
+    }
+    .details-section h2 {
+        font-size: 1.2rem;
+    }
+
+    .details-section p {
+        font-size: 0.8rem;
+    }
+
+    .login-modal-content {
+        width: 95%;
+    }
+
+    .edit-button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    #editRequestForm textarea {
+        height: 80px; /* Limit textarea height */
     }
 }
 
+/* For screens smaller than 480px (Small Mobile) */
 @media (max-width: 480px) {
-    .roommate-card h3 {
+    #logo{
+        font-size: 30px;
+    }
+    #logobar {
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    .navbar {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .navbar a {
+        font-size: 0.8rem;
+    }
+
+    .roommate-card {
+        width: 100%;
+    }
+
+    .roommate-card img {
+        height: 200px;
+    }
+
+    .modal-body {
+        flex-direction: column;
+    }
+
+    .image-section {
+        height: 50%;
+        width: 100%;
+    }
+    .details-section {
+        text-align: left;
+        width: 100%;
+    }
+
+    .details-section h2 {
         font-size: 1rem;
     }
 
     .details-section p {
-        font-size: 0.85rem;
+        font-size: 0.7rem;
+    }
+
+    .login-modal-content {
+        padding: 15px;
+    }
+
+    #userRoommateRequest {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .request-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .edit-button {
+        padding: 5px 8px;
+        font-size: 0.7rem;
+    }
+
+    #editRequestForm input,
+    #editRequestForm select,
+    #editRequestForm textarea,
+    #editRequestForm button {
+        font-size: 0.7rem;
+        padding: 5px;
+    }
+
+    #footer {
+        padding: 30px;
     }
 }

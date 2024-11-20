@@ -1,3 +1,114 @@
+function openSearch() {
+    const searchSection = document.getElementById('searchSection');
+    searchSection.style.display = 'block'; // Show the search section
+}
+function closeSearch() {
+    const searchSection = document.getElementById('searchSection');
+    searchSection.style.display = 'none'; // Hide the search section
+}
+
+function searchAccommodation(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const searchInput = document.getElementById('accommodationSearchInput').value;
+    const searchResults = document.getElementById('accommodationSearchResults');
+
+    // Clear previous results
+    searchResults.innerHTML = '';
+
+    // Fetch data from the server
+    fetch(`http://localhost:3000/api/admin/accommodation?query=${encodeURIComponent(searchInput)}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.length === 0) {
+                searchResults.innerHTML = '<p>No accommodations found.</p>';
+                return;
+            }
+
+            // Display results
+            data.forEach(accommodation => {
+                const pictures = Array.isArray(accommodation.pictures)
+                    ? accommodation.pictures
+                    : JSON.parse(accommodation.pictures || '[]');
+
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                    <img src="${pictures[0] || 'images/default.jpg'}" alt="${accommodation.accommodation_name}"><br>
+                    <h3>${accommodation.accommodation_name}</h3>
+                    <p><strong>Location:</strong> ${accommodation.location}</p>
+                    <p><strong>Price :</strong> ₹${accommodation.price} per room</p>
+                    <p><strong>Gender preference:</strong> ${accommodation.gender_preference}</p>
+                    <p><strong>Food Type:</strong> ${accommodation.food_type}</p>
+                    <p><strong>Total Rooms:</strong> ${accommodation.total_rooms}</p>
+                    <p><strong>Room Sharing:</strong> ${accommodation.room_sharing}</p>
+                    <p><strong>Bathroom:</strong> ${accommodation.bathroom}</p>
+                    <button class="delete-button" onclick="deleteAccommodation(${accommodation.accommodation_id})">
+                        Delete
+                    </button>
+                `;
+                searchResults.appendChild(card);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching accommodations:', error);
+            searchResults.innerHTML = '<p>Error fetching accommodations. Please try again later.</p>';
+        });
+}
+
+function searchUser(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const searchInput = document.getElementById('userSearchInput').value;
+    const searchResults = document.getElementById('userSearchResults');
+
+    // Clear previous results
+    searchResults.innerHTML = '';
+
+    // Fetch data from the server
+    fetch(`http://localhost:3000/api/admin/user?query=${encodeURIComponent(searchInput)}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.length === 0) {
+                searchResults.innerHTML = '<p>No users found.</p>';
+                return;
+            }
+
+            // Display results
+            data.forEach(user => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                    <img src="${user.pictures || 'images/default.jpg'}" alt="${user.name}"><br>
+                    <h3>${user.name}</h3>
+                    <p><strong>Age:</strong> ${user.age}</p>
+                    <p><strong>Gender:</strong> ${user.gender}</p>
+                    <p><strong>Profession:</strong> ${user.profession}</p>
+                    <p><strong>Location:</strong> ${user.location}</p>
+                    <p><strong>Contact:</strong> ${user.contact}</p>
+                    <button class="delete-button" onclick="deleteRoommate(${user.user_id})">
+                        Delete
+                    </button>
+                `;
+                searchResults.appendChild(card);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching users:', error);
+            searchResults.innerHTML = '<p>Error fetching users. Please try again later.</p>';
+        });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const accommodationsContainer = document.getElementById('accommodations-container');
     const roommatesContainer = document.getElementById('roommates-container');
@@ -20,10 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${pictures[0] || 'images/default.jpg'}" alt="${accommodation.accommodation_name}"><br>
                     <h3>${accommodation.accommodation_name}</h3>
                     <p><strong>Location:</strong> ${accommodation.location}</p>
+                    <p><strong>Price :</strong> ₹${accommodation.price} per room</p>
                     <p><strong>Gender preference:</strong> ${accommodation.gender_preference}</p>
+                    <p><strong>Food Type:</strong> ${accommodation.food_type}</p>
                     <p><strong>Total Rooms:</strong> ${accommodation.total_rooms}</p>
                     <p><strong>Room Sharing:</strong> ${accommodation.room_sharing}</p>
-                    <p><strong>Food Type:</strong> ${accommodation.food_type}</p><br>
+                    <p><strong>Bathroom:</strong> ${accommodation.bathroom}</p>
                     <button class="delete-button" onclick="deleteAccommodation(${accommodation.accommodation_id})">
                         Delete
                     </button>

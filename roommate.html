@@ -21,10 +21,62 @@
             <div>
                 <a href="index.html">HostFinder</a>
                 <a href="#logobar">Home</a>
-                <a href="#footer">Contact</a>
-                <a href="#" onclick="openLoginModal()">Profile</a>
+                <!-- <a href="#footer">Contact</a> -->
+                <a href="#" onclick="openLoginModal()">Login</a>
+
             </div>
         </div>
+
+        <!-- Roommate Request Section -->
+        <section id="userRoommateRequest" style="display: none;">
+            <div class="request-header">
+                <h2>Your Roommate Request</h2>
+                <button class="edit-button" id="editRequestButton" onclick="editRoommateRequest()">Edit</button>                
+            </div>
+
+            <div class="request-details" id="requestDetails">
+                <!-- Details displayed dynamically -->
+                <p><strong>Name:</strong> <span id="requestName"></span></p>
+                <p><strong>Age:</strong> <span id="requestAge"></span></p>
+                <p><strong>Gender:</strong> <span id="requestGender"></span></p>
+                <p><strong>Profession:</strong> <span id="requestProfession"></span></p>
+                <p><strong>Room Sharing:</strong> <span id="requestRoomSharing"></span></p>
+                <p><strong>Location:</strong> <span id="requestLocation"></span></p>
+                <p><strong>Description:</strong> <span id="requestDescription"></span></p>
+                <p><strong>Requirements:</strong> <span id="requestRequirements"></span></p>
+                <p><strong>Contact:</strong> <span id="requestContact"></span></p>
+                <p><strong>Email:</strong> <span id="requestEmail"></span></p>
+                <p><strong>Pictures:</strong> <span id="requestPictures"></span></p>
+                <button class="edit-button" id="logoutButton" style="display: none;" onclick="logout()">Logout</button>
+
+            </div>
+
+            <form id="editRequestForm" style="display: none;" onsubmit="saveRoommateRequest(event)">
+                <input type="text" id="editName" placeholder="Name" required>
+                <input type="number" id="editAge" placeholder="Age" required>
+                <select id="editGender" >
+                    <!-- <option value="">Gender</option> -->
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <input type="text" id="editProfession" placeholder="Profession" required>
+                <select id="editRoomSharing" multiple>
+                    <option value="singel">Single</option>
+                    <option value="double">Double</option>
+                    <option value="triple">Triple</option>
+                </select>
+                <input type="text" id="editLocation" placeholder="Location" required>
+                <textarea id="editDescription" placeholder="Description"></textarea>
+                <textarea id="editRequirements" placeholder="Requirements"></textarea>
+                <input type="tel" id="editContact" placeholder="Contact Number" required>
+                <input type="email" id="editEmail" placeholder="Email" required>
+                <input type="text" id="editPictures" placeholder="Pictures" required>
+                <button type="submit" class="button">Save</button>
+                <button onclick="closeRoommateRequest()" class="button">Cancle</button>
+            </form>
+        </section>
+
 
         <div style="text-align: center; color:#333;">
             <h1>Suggessions</h1>
@@ -45,7 +97,8 @@
 
                     <!-- Details -->
                     <div class="details-section">
-                        <h2 id="roommateName"></h2><hr>
+                        <h2 id="roommateName"></h2>
+                        <hr>
                         <p><strong>Age:</strong> <span id="roommateAge"></span></p>
                         <p><strong>Gender:</strong> <span id="roommateGender"></span></p>
                         <p><strong>Profession:</strong> <span id="roommateProfession"></span></p>
@@ -54,6 +107,7 @@
                         <p><strong>Description:</strong> <span id="roommateDescription"></span></p>
                         <p><strong>Requirements:</strong> <span id="roommateRequirements"></span></p>
                         <p><strong>Contact:</strong> <span id="roommateContact"></span></p>
+                        <p><strong>Email:</strong> <span id="roommateEmail"></span></p>
                     </div>
                 </div>
             </div>
@@ -61,7 +115,7 @@
 
         <!-- More roommate cards as needed -->
         </section>
-           
+
         <!-- Profile Modal -->
         <div id="loginModal" class="modal">
             <div class="login-modal-content">

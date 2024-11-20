@@ -20,7 +20,7 @@
             <div>
                 <a href="#logobar">Home</a>
                 <a href="#about">About</a>
-                <a href="#footer">Contact</a>
+                <!-- <a href="#footer">Contact</a> -->
                 <a href="owner.html">Profile</a>
             </div>
         </div>
@@ -33,19 +33,18 @@
                     <h1>Welcome to HostFinder</h1>
                     <p>Find the perfect place to stay from our extensive list of accommodations tailored to meet your
                         needs.</p>
-                    <form id="searchForm" onsubmit="searchAccommodations(event)">
+                    <!-- <form id="searchForm" onsubmit="searchAccommodation(event)">
                         <input type="text" placeholder="Search location" id="search-bar">
                         <br>
                         <button type="submit" class="button">Search</button>
-                    </form>
+                    </form> -->
                 </section>
 
                 <section class="hero" id="roomate-finder">
                     <h1>Looking for a roommate?</h1>
                     <h2>We've got you covered.</h2>
                     <p>Find compatible roommates or housemates based on preferences and lifestyle.</p>
-                    <button class="button" onclick="window.location.href='roommate.html'">Roommate Finder
-                        &#8594;</button>
+                    <button class="button" onclick="window.location.href='roommate.html'">Roommate Finder</button>
                 </section>
 
             </div>
@@ -53,8 +52,18 @@
             <button class="nav-btn next" onclick="showNext()">&#10095;</button>
         </div>
 
-        <!-- Filter Section -->
-        <!-- <section class="filter-section">
+        <section class="admin-search">
+            <form id="searchForm" onsubmit="searchAccommodation(event)">
+                <input type="text" id="accommodationSearchInput" placeholder="Search accommodation name" required>
+                <button type="submit" class="search-button">Search</button>
+            </form>
+            <div id="accommodationSearchResults" class="results">
+                <!-- Search results will be displayed here -->
+            </div>
+        </section>
+
+        <!-- Filter Section
+        <section class="filter-section">
             <h2>Filter Accommodations</h2>
             <form id="filterForm" onsubmit="filterAccommodations(event)">
                 <label for="priceRange">Price Range:</label>
@@ -118,17 +127,22 @@
                         <h2 id="accommodationName"></h2>
                         <h3 id="accommodationLocation"></h3>
                         <hr>
+                        <p><strong>Price:</strong>₹<span id="accommodationPrice"></span> per room <br>
+                        *on sharing, price will be devided accordingly</p>
                         <p><strong>Description:</strong> <span id="accommodationDescription"></span></p>
                         <p><strong>Total Rooms:</strong> <span id="accommodationRooms"></span></p>
                         <p><strong>Gender Preference:</strong> <span id="genderPreference"></span></p>
                         <p><strong>Food Type:</strong> <span id="foodType"></span></p>
-                        <p><strong>Room Sharing:</strong> <span id="roomSharing"></span></p>
-                        <p><strong>Bathrooms:</strong> <span id="bathroom"></span></p>
-                        <!-- <span><strong>Facilities:</strong></span> -->
+                        <p><strong>Room Sharing:</strong> <span id="roomSharing"></span> available</p>
+                        <p><strong>Bathrooms:</strong> <span id="bathroom"></span> available</p>
+                        <p><strong>Restrictions:</strong> <span id="restrictions"></span></p>
                         <ul class="facilities-list" id="facilitiesList">
                             <!-- Facilities dynamically added via JavaScript -->
                         </ul>
                     </div>
+                </div>
+                <div class="contact-button" >
+                    <button class="button" onclick="showOwnerDetails()">Contact</button>
                 </div>
             </div>
         </div>

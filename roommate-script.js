@@ -2,11 +2,11 @@
 const loginModal = document.getElementById("loginModal");
 const registerModal = document.getElementById("registerModal");
 
-function openLoginModal(){
+function openLoginModal() {
     loginModal.style.display = "block";
     registerModal.style.display = "none";
 }
-function openRegisterModal(){
+function openRegisterModal() {
     loginModal.style.display = "none";
     registerModal.style.display = "block";
 }
@@ -81,6 +81,7 @@ function openRoommateModal(data) {
     document.getElementById('roommateDescription').textContent = data.description || 'No Description Available';
     document.getElementById('roommateRequirements').textContent = data.requirements || 'No Requirements Provided';
     document.getElementById('roommateContact').textContent = data.contact || 'No Contact Provided';
+    document.getElementById('roommateEmail').textContent = data.email || 'No Contact Provided';
 
     // Show the modal
     document.getElementById('roommateModal').style.display = 'block';
@@ -90,16 +91,11 @@ function closeRoommateModal() {
     document.getElementById('roommateModal').style.display = 'none';
 }
 
-// window.onclick = function(event) {
-//     const modal = document.getElementById('roommateModal');
-//     if (event.target === modal) {
-//         closeRoommateModal();
-//     }
-// };
-
 function login() {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
+
+    const requestDetails = document.getElementById('requestDetails');
 
     if (!email || !password) {
         alert("Please enter both email and password.");
@@ -124,7 +120,10 @@ function login() {
             if (data.success) {
                 alert("Login successful!");
                 // Redirect to user.html with user_id as a query parameter
-                window.location.href = `user.html?user_id=${data.user_id}`;
+                // window.location.href = `roommate.html?user_id=${data.user_id}`;
+                // requestDetails.style.display = 'block';
+                localStorage.setItem('user_id', data.user_id); // Store user_id in localStorage
+                window.location.reload();
             } else {
                 alert(data.message || "Invalid email or password.");
             }
@@ -163,7 +162,7 @@ function register() {
         .then(data => {
             if (data.success) {
                 alert("Registration successful!");
-                openUserLoginModal();
+                openLoginModal();
             } else {
                 alert(data.message || "Registration failed.");
             }
@@ -172,14 +171,135 @@ function register() {
             console.error('Error during registration:', error);
         });
 }
+document.addEventListener('DOMContentLoaded', () => {
+    const userId = localStorage.getItem('user_id');
+    const requestSection = document.getElementById('userRoommateRequest');
+    const requestDetails = document.getElementById('requestDetails');
+    const editForm = document.getElementById('editRequestForm');
+    const logoutButton = document.getElementById('logoutButton');
+
+    // If no user is logged in, hide the user-specific sections
+    if (!userId) {
+        requestSection.style.display = 'none';
+        logoutButton.style.display = 'none';
+        return;
+    }
+
+    // Show the logout button if the user is logged in
+    logoutButton.style.display = 'block';
+
+    // Fetch roommate request details for the logged-in user
+    fetch(`http://localhost:3000/api/roommate_requests/${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                // Populate the request details
+                document.getElementById('requestName').textContent = data.name;
+                document.getElementById('requestAge').textContent = data.age;
+                document.getElementById('requestGender').textContent = data.gender;
+                document.getElementById('requestProfession').textContent = data.profession;
+                document.getElementById('requestRoomSharing').textContent = data.room_sharing;
+                document.getElementById('requestLocation').textContent = data.location;
+                document.getElementById('requestDescription').textContent = data.description;
+                document.getElementById('requestRequirements').textContent = data.requirements;
+                document.getElementById('requestContact').textContent = data.contact;
+                document.getElementById('requestEmail').textContent = data.email;
+                document.getElementById('requestPictures').textContent = data.pictures;
+
+                requestDetails.style.display = 'block';
+            } else {
+                // No request found, show edit form for adding
+                editForm.style.display = 'block';
+            }
+
+            requestSection.style.display = 'block';
+        })
+        .catch(error => console.error('Error fetching roommate request:', error));
+});
+
+// Logout Functionality
+function logout() {
+    localStorage.removeItem('user_id'); // Remove user ID from local storage
+    alert('You have been logged out successfully.');
+    location.reload(); // Reload the page to reset the state
+}
+
+// Enable editing of roommate request
+function editRoommateRequest() {
+    const requestDetails = document.getElementById('requestDetails');
+    const editForm = document.getElementById('editRequestForm');
+
+    requestDetails.style.display = 'none';
+    editForm.style.display = 'block';
+
+    // Populate the form with existing data
+    document.getElementById('editName').value = document.getElementById('requestName').textContent;
+    document.getElementById('editAge').value = document.getElementById('requestAge').textContent;
+    document.getElementById('editGender').value = document.getElementById('requestGender').textContent;
+    document.getElementById('editProfession').value = document.getElementById('requestProfession').textContent;
+    document.getElementById('editRoomSharing').value = document.getElementById('requestRoomSharing').textContent;
+    document.getElementById('editLocation').value = document.getElementById('requestLocation').textContent;
+    document.getElementById('editDescription').value = document.getElementById('requestDescription').textContent;
+    document.getElementById('editRequirements').value = document.getElementById('requestRequirements').textContent;
+    document.getElementById('editContact').value = document.getElementById('requestContact').textContent;
+    document.getElementById('editEmail').value = document.getElementById('requestEmail').textContent;
+    document.getElementById('editPictures').value = document.getElementById('requestPictures').textContent;
+}
+
+function closeRoommateRequest() {
+    event.preventDefault()
+    const requestDetails = document.getElementById('requestDetails');
+    const editForm = document.getElementById('editRequestForm');
+
+    editForm.style.display = 'none';
+    requestDetails.style.display = 'block';
+}
+
+// Save roommate request to the database
+function saveRoommateRequest(event) {
+    event.preventDefault();
+
+    const userId = localStorage.getItem('user_id');
+    const requestData = {
+        name: document.getElementById('editName').value,
+        age: document.getElementById('editAge').value,
+        gender: document.getElementById('editGender').value,
+        profession: document.getElementById('editProfession').value,
+        room_sharing: Array.from(document.getElementById('editRoomSharing').selectedOptions).map(opt => opt.value).join(','),
+        location: document.getElementById('editLocation').value,
+        description: document.getElementById('editDescription').value,
+        requirements: document.getElementById('editRequirements').value,
+        contact: document.getElementById('editContact').value,
+        contact: document.getElementById('editEmail').value,
+        pictures: document.getElementById('editPictures').value,
+    };
+
+    fetch(`http://localhost:3000/api/roommate_requests/${userId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Roommate request saved successfully!');
+                location.reload(); // Refresh the page
+            } else {
+                alert(data.message || 'Failed to save the request.');
+            }
+        })
+        .catch(error => console.error('Error saving roommate request:', error));
+}
 
 
 // Add event listeners to all elements with the "close" class
 document.addEventListener('DOMContentLoaded', () => {
     const closeButtons = document.querySelectorAll('.close');
-    
+
     closeButtons.forEach(button => {
-        button.onclick = function() {
+        button.onclick = function () {
             const modal = button.closest('.modal'); // Find the closest modal ancestor
             if (modal) {
                 modal.style.display = 'none';
@@ -191,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Function to close the modal when clicking outside of it
-window.onclick = function(event) {
+window.onclick = function (event) {
     const modals = document.querySelectorAll('.modal');
     modals.forEach(modal => {
         if (event.target === modal) {

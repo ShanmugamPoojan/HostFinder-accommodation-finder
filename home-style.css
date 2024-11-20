@@ -57,7 +57,7 @@ a{
     position: sticky;
     top: 10px;
     left: 0;
-    z-index: 10000;
+    z-index: 10;
 }
 .navbar a {
     color: #fff;
@@ -72,31 +72,85 @@ a{
 
 /* Hero Section */
 .hero {
-    /* height: 60vh; */
-    padding: 50px 20px;
-    /* padding-top: 0; */
-    margin-bottom: 30px;
-
+    padding: 80px 20px;
+    margin-bottom: 50px;
+    color: white; /* Make text stand out against the background */
+    text-align: center;
     background-image: url(images/hero1.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-color: #f4f4f4;
-    text-align: center;
-    /* border-radius: 20px; */
+    background-position: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
 }
-#roomate-finder{
-    /* height: 40vh;
-    width: 80vw;
-    margin: 10px auto;
-    padding: 50px 20px; */
 
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+
+}
+
+.hero h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.hero .button {
+    padding: 12px 30px;
+    font-size: 1rem;
+    /* font-weight: bold; */
+    color: white;
+    background-color:var(--primary); /* Fallback to a primary color */
+    border: none;
+    box-shadow: 0 0 10px black;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.hero .button:hover {
+    background-color: var(--hover); /* Hover state color */
+}
+
+#roomate-finder {
     background-size: cover;
     background-repeat: no-repeat;
-    background-color: #f4f4f4;
-    text-align: center;
+    background-position: center;
     background-image: url(images/hero6.jpg);
-    /* border-radius: 50px; */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
 }
+
+#roomate-finder h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+#roomate-finder h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+#roomate-finder p {
+    font-size: 1.2rem;
+    color: #f1f1f1;
+    margin-bottom: 20px;
+}
+
 #hero-carousel {
     position: relative;
     overflow: hidden;
@@ -167,6 +221,7 @@ a{
     /* width: 150px; */
     color: #fff;
     background-color: #868686;
+    border: none;
     border-radius: 10px;
     text-decoration: none;
     padding: 8px 16px;
@@ -282,6 +337,58 @@ a{
     background-color: #ddd;
 } */
 
+.admin-search {
+    margin: 20px;
+    padding: 5px 20px;
+    background-color: rgb(220, 220, 220);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.admin-search input {
+    padding: 10px;
+    width: 50%;
+    font-size: 1rem;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+#accommodationSearchInput{
+    margin: 20px auto;
+}
+.results {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.results img{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+.results div{
+    background-color: #FFF;
+
+}
+
 /* Accommodation Details Modal */
 .modal {
     display: none;
@@ -359,6 +466,19 @@ a{
     margin: 10px 0;
     font-size: 1rem;
     color: var(--text);
+}
+.contact-button{
+    margin: 10px auto;
+    text-align: center;
+}
+.contact-button button{
+    font-weight: bold;
+    background-color: #007BFF;
+    width: 100%;
+}
+.contact-button button:hover{
+    background-color: #0056b3;
+
 }
 
 /* Facilities List Styling */
@@ -593,6 +713,12 @@ a{
         font-size: 0.85rem;
         padding: 8px;
     }
+    .nav-btn{
+        font-size: 1em;
+    }
+    #search-bar{
+        font-size: medium;
+    }
     .login-modal-content {
         margin:30% auto;
     } 
@@ -615,5 +741,59 @@ a{
 
     .about-info {
         padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 50px 10px;
+    }
+    .hero h1 {
+        font-size: 2rem; /* Further reduce the size for smaller screens */
+    }
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+    .hero p {
+        font-size: 0.9rem;
+    }
+    .hero .button {
+        font-size: 0.8rem;
+        padding: 8px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 40px 10px;
+    }
+    .hero h1 {
+        font-size: 1.8rem; /* Reduce heading size for very small screens */
+    }
+    .hero h2 {
+        font-size: 1.2rem;
+    }
+    .hero p {
+        font-size: 0.8rem;
+    }
+    .hero .button {
+        font-size: 0.7rem;
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    #roomate-finder h1 {
+        font-size: 1.8rem;
+    }
+    #roomate-finder h2 {
+        font-size: 1.3rem;
+    }
+    #roomate-finder p {
+        font-size: 0.8rem;
+    }
+    #roomate-finder .button {
+        font-size: 0.7rem;
+        padding: 8px 15px;
     }
 }
