@@ -14,11 +14,11 @@
         <!-- Navigation Bar -->
 
         <div id="logobar">
-            <p><a href="#" id="logo">HostFinder</a></p>
+            <a href="#" id="logo">HostFinder</a>
         </div>
         <div class="navbar">
             <div>
-                <a href="index.html">Home</a>
+                <a href="#" onclick="openHomePage()">Home</a>
                 <a href="#footer">Contact</a>
                 <a href="#" onclick="openLoginModal()">Login in</a>
             </div>
@@ -26,10 +26,12 @@
         <!-- <h1>Welcome, Owner</h1> -->
         <!-- Accommodation Details Section -->
         <!-- No Accommodation Message -->
-        <div id="noAccommodationMessage" style="display: none;">
+        <div id="noAccommodationSection" style="display: none;">
             <h1>No Accommodation Found</h1>
             <p>Add your first accommodation to manage your listings!</p>
             <button onclick="addAccommodation()">Add Accommodation</button>
+            <button onclick="logout()">Logout</button>
+            
         </div>
         
         <div id="ownerAccommodationSection" style="display: none;">
@@ -38,12 +40,13 @@
                 <h2 id="accommodationName"></h2>
                 <p><strong>Price:</strong> <span id="price"></span></p>
                 <p><strong>Location:</strong> <span id="location"></span></p>
+                <p><strong>Landmark:</strong> <span id="landmark"></span></p>
                 <p><strong>Description:</strong> <span id="description"></span></p>
                 <p><strong>Total Rooms:</strong> <span id="totalRooms"></span></p>
                 <p><strong>Gender Preference:</strong> <span id="genderPreference"></span></p>
                 <p><strong>Food Type:</strong> <span id="foodType"></span></p>
                 <p><strong>Room Sharing:</strong> <span id="roomSharing"></span></p>
-                <p><strong>Bathrooms:</strong> <span id="bathrooms"></span></p>
+                <p><strong>Bathrooms:</strong> <span id="bathroom"></span></p>
                 <p><strong>Facilities:</strong>
                 <ul id="facilitiesList"></ul>
                 </p>
@@ -62,6 +65,7 @@
             <input type="text" id="accommodationNameInput" placeholder="Accommodation Name" required>
             <input type="number" id="priceInput" placeholder="Price" required>
             <input type="text" id="locationInput" placeholder="Location" required>
+            <input type="text" id="landmarkInput" placeholder="Landmark (optional)">
             <textarea id="descriptionInput" placeholder="Description" required></textarea>
             <input type="number" id="totalRoomsInput" placeholder="Total Rooms" required>
             <select id="genderPreferenceInput">

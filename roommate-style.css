@@ -19,26 +19,27 @@ body {
 }
 #bg{
     background: linear-gradient(to top, #dfe9f3 0%, white 100%);
+    min-height: 70vh;
+    
 }
 a{
     text-decoration: none;
     text-transform: none;
 }
 
-#logo{
-    font-weight: bolder;
-    font-size: 50px;
-    color: #fff;
-}
 #logobar{
     margin: auto;
-    border-radius: 0 0 100px 100px;
-    width: 60vw;
-    background-color: var(--primary);
     padding: 10px 20px;
-}
-#logobar p{
+    width: 60vw;
+    border-radius: 0 0 100px 100px;
+    color: #fff;
+    background-color: var(--primary);
+    font-weight: bolder;
+    font-size: 50px;
     text-align: center;
+}
+#logobar > a{
+    color: #fff;
 }
 .navbar {
     margin:  5px auto;
@@ -140,6 +141,7 @@ a{
 }
 
 .modal-body {
+    margin: 10px;
     display: flex;
     /* flex-direction: row; */
     gap: 20px;
@@ -337,6 +339,7 @@ a{
     font-weight: bold;
     text-align: end;
 }
+
 .close:hover,
 .close:focus {
     color: #000;

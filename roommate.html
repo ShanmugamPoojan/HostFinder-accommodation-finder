@@ -15,7 +15,7 @@
     <main id="bg">
 
         <div id="logobar">
-            <p><a href="#" id="logo">RoommateFinder</a></p>
+            <a href="#" id="logo">RoommateFinder</a>
         </div>
         <div class="navbar">
             <div>
@@ -31,7 +31,7 @@
         <section id="userRoommateRequest" style="display: none;">
             <div class="request-header">
                 <h2>Your Roommate Request</h2>
-                <button class="edit-button" id="editRequestButton" onclick="editRoommateRequest()">Edit</button>                
+                <button class="edit-button" id="editRequestButton" onclick="editRoommateRequest()">Edit</button>
             </div>
 
             <div class="request-details" id="requestDetails">
@@ -54,7 +54,7 @@
             <form id="editRequestForm" style="display: none;" onsubmit="saveRoommateRequest(event)">
                 <input type="text" id="editName" placeholder="Name" required>
                 <input type="number" id="editAge" placeholder="Age" required>
-                <select id="editGender" >
+                <select id="editGender">
                     <!-- <option value="">Gender</option> -->
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -79,7 +79,7 @@
 
 
         <div style="text-align: center; color:#333;">
-            <h1>Suggessions</h1>
+            <h1>Suggestions</h1>
         </div>
         <div class="roommates">
             <!-- Roommate cards dynamically added here -->
@@ -88,7 +88,7 @@
         <!-- Roommate Details Modal -->
         <div id="roommateModal" class="modal">
             <div class="modal-content">
-                <div class="close" onclick="closeRoommateModal()">&times;</div>
+                <!-- <div class="close" onclick="closeRoommateModal()">&times;</div> -->
                 <div class="modal-body">
                     <!-- Image -->
                     <div class="image-section">
@@ -97,6 +97,7 @@
 
                     <!-- Details -->
                     <div class="details-section">
+                        <span class="close">&times;</span>
                         <h2 id="roommateName"></h2>
                         <hr>
                         <p><strong>Age:</strong> <span id="roommateAge"></span></p>

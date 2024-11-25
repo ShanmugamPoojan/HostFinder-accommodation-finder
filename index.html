@@ -11,20 +11,19 @@
 
 <body>
     <main id="bg">
-        <!-- Navigation Bar -->
-
+        <!--------------------------------- Navigation Bar ----------------------------------------->
         <div id="logobar">
-            <p><a href="#" id="logo">HostFinder</a></p>
+            <a href="#" id="logo">HostFinder</a>
         </div>
         <div class="navbar">
             <div>
-                <a href="#logobar">Home</a>
-                <a href="#about">About</a>
-                <!-- <a href="#footer">Contact</a> -->
-                <a href="owner.html">Profile</a>
+                <a href="#logobar" class="button">Home</a>
+                <a href="#about" class="button">About</a>
+                <!-- <a href="#footer" class="button">Contact</a> -->
+                <a href="owner.html" class="button">Profile</a>
             </div>
         </div>
-        <!-- Hero Section -->
+        <!--------------------------------- Hero section ----------------------------------------->
         <div id="hero-carousel">
             <button class="nav-btn prev" onclick="showPrevious()">&#10094;</button>
 
@@ -33,37 +32,25 @@
                     <h1>Welcome to HostFinder</h1>
                     <p>Find the perfect place to stay from our extensive list of accommodations tailored to meet your
                         needs.</p>
-                    <!-- <form id="searchForm" onsubmit="searchAccommodation(event)">
-                        <input type="text" placeholder="Search location" id="search-bar">
-                        <br>
-                        <button type="submit" class="button">Search</button>
-                    </form> -->
+                    <form id="searchForm" oninput="searchAccommodation(event)" onsubmit="searchAccommodation(event)">
+                        <input type="text" id="accommodationSearchInput" placeholder="Search accommodation name"">
+                    </form>
                 </section>
 
-                <section class="hero" id="roomate-finder">
-                    <h1>Looking for a roommate?</h1>
-                    <h2>We've got you covered.</h2>
-                    <p>Find compatible roommates or housemates based on preferences and lifestyle.</p>
-                    <button class="button" onclick="window.location.href='roommate.html'">Roommate Finder</button>
+                <section class=" hero" id="roomate-finder">
+                        <h1>Looking for a roommate?</h1>
+                        <h2>We've got you covered.</h2>
+                        <p>Find compatible roommates or housemates based on preferences and lifestyle.</p>
+                        <button class="button" onclick="window.location.href='roommate.html'">Roommate Finder</button>
                 </section>
 
             </div>
-
             <button class="nav-btn next" onclick="showNext()">&#10095;</button>
         </div>
 
-        <section class="admin-search">
-            <form id="searchForm" onsubmit="searchAccommodation(event)">
-                <input type="text" id="accommodationSearchInput" placeholder="Search accommodation name" required>
-                <button type="submit" class="search-button">Search</button>
-            </form>
-            <div id="accommodationSearchResults" class="results">
-                <!-- Search results will be displayed here -->
-            </div>
-        </section>
+        <!--------------------------------- Filter section ----------------------------------------->
 
-        <!-- Filter Section
-        <section class="filter-section">
+        <!-- <section class="filter-section">
             <h2>Filter Accommodations</h2>
             <form id="filterForm" onsubmit="filterAccommodations(event)">
                 <label for="priceRange">Price Range:</label>
@@ -95,25 +82,28 @@
             </form>
         </section> -->
 
-        <!-- 
-        <form id="searchForm" onsubmit="searchAccommodations(event)">
-            <input type="text" id="search-bar" placeholder="Search location or description">
-            <button type="submit">Search</button>
-        </form> -->
+        <!--------------------------------- Search results display ----------------------------------------->
 
+        <section id="home-search" style="display: none;">
+            <h2>Search results</h2>
+            <div id="accommodationSearchResults" class="results">
+                <!-- Search results will be displayed here -->
+            </div>
+            <button class="button" onclick="closeHomeSearch()">Close</button>
+        </section>
 
-        <!-- Accommodation Listings -->
+        <!--------------------------------- Accommodations display section ----------------------------------------->
+
         <div style="text-align: center;">
-            <h1>Suggessions</h1>
+            <h1>Suggestions</h1>
         </div>
         <section class="accommodations">
-
+            <!-- accommodaiton cards -->
         </section>
 
         <!-- Accommodation Details Modal -->
         <div id="accommodationModal" class="modal">
             <div class="modal-content">
-                <div class="close" onclick="closeModal()">&times;</div>
                 <div class="modal-body">
                     <!-- Left Side: Image Gallery -->
                     <div class="image-gallery">
@@ -124,11 +114,13 @@
                     </div>
                     <!-- Right Side: Details -->
                     <div class="details-section">
+                        <span class="close">&times;</span>
                         <h2 id="accommodationName"></h2>
-                        <h3 id="accommodationLocation"></h3>
+                        <p><strong>Location:</strong> <span id="accommodationLocation"></span></p>
                         <hr>
+                        <p><strong>Landmark:</strong> <span id="accommodationLandmark"></span></p>
                         <p><strong>Price:</strong>₹<span id="accommodationPrice"></span> per room <br>
-                        *on sharing, price will be devided accordingly</p>
+                            *on sharing, price will be devided accordingly</p>
                         <p><strong>Description:</strong> <span id="accommodationDescription"></span></p>
                         <p><strong>Total Rooms:</strong> <span id="accommodationRooms"></span></p>
                         <p><strong>Gender Preference:</strong> <span id="genderPreference"></span></p>
@@ -141,19 +133,18 @@
                         </ul>
                     </div>
                 </div>
-                <div class="contact-button" >
+                <div class="contact-button">
                     <button class="button" onclick="showOwnerDetails()">Contact</button>
                 </div>
             </div>
         </div>
 
-        </section>
-
+       <!--------------------------------- About section ----------------------------------------->
 
         <section id="about">
             <div id="host-about">
                 <div class="about-image">
-                    <img src="images/hero3.jpg" alt="image">
+                    <img src="images/about1.jpg" alt="image">
                 </div>
                 <div class="about-info">
                     <h1>What we do</h1>
@@ -184,7 +175,8 @@
                     <h1>Our services</h1>
                     <hr><br>
                     <p>
-                        Our <b>Roommate Finder</b> service is designed to help you find the right person to share your living
+                        Our <b>Roommate Finder</b> service is designed to help you find the right person to share your
+                        living
                         space. With personalized matching based on preferences like location, gender, profession, and
                         lifestyle habits, we ensure you connect with someone compatible. You can browse detailed
                         profiles, post your own requirements, and communicate securely with potential roommates. Safety
@@ -194,13 +186,15 @@
                     </p>
                 </div>
                 <div class="about-image">
-                    <img src="images/hero5.jpg" alt="image">
+                    <img src="images/about2.jpg" alt="image">
                 </div>
             </div>
 
         </section>
     </main>
-    <!-- Footer -->
+
+    <!--------------------------------- Footer section ----------------------------------------->
+
     <footer id="footer">
         <p><b>Contact us:</b><br>
             <u>Email</u><br>
@@ -213,8 +207,8 @@
         <p>&copy; 2024 HostFinder. All rights reserved.</p>
     </footer>
 
-    <script src="home-script.js">
-    </script>
+    <script src="home-script.js"></script>
+
 </body>
 
 </html>

@@ -10,47 +10,57 @@
 
     scroll-behavior: smooth;
 }
+
+.button {
+    padding: 8px 16px;
+    color: #fff;
+    background-color: #333;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: large;
+    /* font-weight: bold; */
+    cursor: pointer;
+
+}
+.button:hover {
+    background-color: var(--hover);
+}
+
 body {
     font-family: "SUSE", sans-serif;
 }
 a{
     text-decoration: none;
     text-transform: none;
-    color: #fff;
 }
 #bg{
-    /* padding-bottom: 50px; */
-    /* width: 100vw; */
     background: linear-gradient(to top, #dfe9f3 0%, white 100%);
-    /* background-image: url(images/hero3.jpg);
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed; */
+    /* background-color:#dfe9f3 ; */
 }
+
 /* Navigation Bar */
-#logo{
-    font-weight: bolder;
-    font-size: 50px;
-}
 #logobar{
     margin: auto;
-    border-radius: 0 0 100px 100px;
-    width: 60vw;
-    background-color: var(--primary);
-    color: #fff;
     padding: 10px 20px;
-    font-size: large;
-}
-#logobar p{
+    width: 60vw;
+    border-radius: 0 0 100px 100px;
+    color: #fff;
+    background-color: var(--primary);
+    font-weight: bolder;
+    font-size: 50px;
     text-align: center;
+}
+#logobar > a{
+    color: #fff;
 }
 .navbar {
     margin:  5px auto;
     padding: 20px;
-    border-radius: 20px;
     width: 50vw;
-    background-color: var(--primary);
+    border-radius: 20px;
     color: #fff;
+    background-color: var(--primary);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,22 +69,12 @@ a{
     left: 0;
     z-index: 10;
 }
-.navbar a {
-    color: #fff;
-    text-decoration: none;
-    padding: 8px 16px;
-    font-size: large;
-}
-.navbar a:hover {
-    background-color: var(--hover);
-    border-radius: 5px;
-}
 
 /* Hero Section */
 .hero {
     padding: 80px 20px;
     margin-bottom: 50px;
-    color: white; /* Make text stand out against the background */
+    color: white; 
     text-align: center;
     background-image: url(images/hero1.jpg);
     background-size: cover;
@@ -92,40 +92,22 @@ a{
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 
 }
-
 .hero h2 {
     font-size: 2rem;
     margin-bottom: 10px;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-
 }
-
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 30px;
 }
 
-.hero .button {
-    padding: 12px 30px;
-    font-size: 1rem;
-    /* font-weight: bold; */
-    color: white;
-    background-color:var(--primary); /* Fallback to a primary color */
-    border: none;
-    box-shadow: 0 0 10px black;
-    border-radius: 25px;
-    cursor: pointer;
-}
-
-.hero .button:hover {
-    background-color: var(--hover); /* Hover state color */
-}
 
 #roomate-finder {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(images/hero6.jpg);
+    background-image: url(images/hero2.jpg);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
@@ -205,7 +187,7 @@ a{
 #roomate-finder p{
     color: #000;
 }
-#search-bar{
+#accommodationSearchInput{
     margin: 20px;
     padding: 15px 20px;
     /* height: 50px; */
@@ -217,19 +199,7 @@ a{
     border-radius: 100px;
 }
 
-.button {
-    /* width: 150px; */
-    color: #fff;
-    background-color: #868686;
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-    padding: 8px 16px;
-    font-size: large;
-}
-.button:hover {
-    background-color: var(--hover);
-}
+
 /* Filter Section */
 .filter-section {
     padding: 20px;
@@ -332,63 +302,6 @@ a{
 
 }
 
-/* .facilities-list li:hover {
-    transform: scale(1.1);
-    background-color: #ddd;
-} */
-
-.admin-search {
-    margin: 20px;
-    padding: 5px 20px;
-    background-color: rgb(220, 220, 220);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.admin-search input {
-    padding: 10px;
-    width: 50%;
-    font-size: 1rem;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.search-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: white;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.search-button:hover {
-    background-color: #0056b3;
-}
-#accommodationSearchInput{
-    margin: 20px auto;
-}
-.results {
-    margin: 20px 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-.results img{
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px 10px 0 0;
-}
-.results div{
-    background-color: #FFF;
-
-}
-
 /* Accommodation Details Modal */
 .modal {
     display: none;
@@ -405,8 +318,8 @@ a{
     background-color: #fff;
     margin: 10% auto;
     padding: 20px;
-    /* width: 80vw; */
-    max-width: 800px;
+    width: 70vw;
+    /* max-width: 800px; */
     border-radius: 10px;
     position: relative;
     display: flex;
@@ -414,11 +327,14 @@ a{
 }
 
 .modal-body {
+    margin: 10px;
+
     display: flex;
     gap: 20px;
 }
 
 .image-gallery {
+    padding-top: 40px;
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -481,6 +397,70 @@ a{
 
 }
 
+/* .facilities-list li:hover {
+    transform: scale(1.1);
+    background-color: #ddd;
+} */
+
+#home-search {
+    margin: 20px;
+    padding: 20px;
+    background-color: rgb(220, 220, 220);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+#home-search {
+    opacity: 1;
+    height: auto;
+    transition: opacity 0.5s ease, height 0.5s ease;
+    overflow: hidden; /* Prevents content from spilling out during the height transition */
+}
+
+/* .home-search input {
+    padding: 10px;
+    width: 50%;
+    font-size: 1rem;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+} 
+.search-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.search-button:hover {
+    background-color: #0056b3;
+} */
+
+#accommodationSearchInput{
+    margin: 20px auto;
+}
+
+.results {
+    /* margin: 20px; */
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.results img{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+.results div{
+    background-color: #FFF;
+
+}
+
 /* Facilities List Styling */
 .facilities-list {
     display: flex;
@@ -497,8 +477,6 @@ a{
     background-color: #e0e0e0;
     border: 1px solid #ddd;
     border-radius: 10%;
-    /* width: 60px; */
-    /* height: 60px; */
     padding: 10px;
     font-size: 0.9rem;
     font-weight: bold;
@@ -509,12 +487,13 @@ a{
     /* transition: transform 0.2s ease; */
 }
 
+
 #about{
     padding: 80px 20px;
 }
 #about > div{
     margin: 10px;
-    height: 400px;
+    /* height: 400px; */
     display: flex;
     
     background-color: #fff;
@@ -536,7 +515,7 @@ a{
 }
 .about-image>img{
     width: 100%;
-    height: 100%;
+    height: 400px;
     object-fit: cover;
 }
 .about-info{

@@ -1,8 +1,9 @@
-:root{
+:root {
     --primary: #333;
     --hover: #555;
     --text: #555;
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -12,34 +13,35 @@
     scroll-behavior: smooth;
 }
 
-#bg{
+#bg {
     background: linear-gradient(to top, #dfe9f3 0%, white 100%);
-    min-height: 80vh;
+    padding-bottom: 20px;
+    min-height: 90vh;
 }
-a{
+
+a {
     text-decoration: none;
     text-transform: none;
 }
-/* Navigation Bar */
-#logo{
-    font-weight: bolder;
-    font-size: 50px;
-    color: #fff;
 
-}
 #logobar{
     margin: auto;
-    border-radius: 0 0 100px 100px;
-    width: 60vw;
-    background-color: var(--primary);
-    color: #fff;
     padding: 10px 20px;
-}
-#logobar p{
+    width: 60vw;
+    border-radius: 0 0 100px 100px;
+    color: #fff;
+    background-color: var(--primary);
+    font-weight: bolder;
+    font-size: 50px;
     text-align: center;
 }
+#logobar > a{
+    color: #fff;
+}
+
+/* Navigation Bar */
 .navbar {
-    margin:  5px auto;
+    margin: 5px auto;
     padding: 20px;
     border-radius: 20px;
     width: 50vw;
@@ -53,19 +55,21 @@ a{
     left: 0;
     z-index: 10;
 }
+
 .navbar a {
     color: #fff;
     text-decoration: none;
     padding: 8px 16px;
     font-size: large;
 }
+
 .navbar a:hover {
     background-color: var(--hover);
     border-radius: 5px;
 }
 
- /* Modal for Login/Register  */
- .modal {
+/* Modal for Login/Register  */
+.modal {
     display: none;
     position: fixed;
     z-index: 20;
@@ -95,19 +99,21 @@ a{
 
 .login-modal-content {
     background-color: #fff;
-    margin:10% auto;
+    margin: 10% auto;
     padding: 20px;
     width: 500px;
     border-radius: 10px;
     text-align: center;
-} 
+}
 
 .login-modal-content h2 {
     margin-bottom: 10px;
 }
+
 .login-modal-content p {
     margin: 10px 0;
 }
+
 .login-modal-content input {
     width: 100%;
     padding: 10px;
@@ -115,6 +121,7 @@ a{
     border-radius: 5px;
     border: 1px solid #ccc;
 }
+
 .login-modal-content button {
     width: 100%;
     padding: 10px 20px;
@@ -122,10 +129,12 @@ a{
     border-radius: 5px;
     cursor: pointer;
 }
+
 .login-modal-content button:hover {
     background-color: #aaa;
-   
+
 }
+
 #ownerAccommodationSection {
     margin: 20px auto;
     padding: 20px;
@@ -137,14 +146,16 @@ a{
 
 #ownerAccommodationSection h1 {
     font-size: 2rem;
-    color: #2C3E50; /* Dark Blue */
+    color: #2C3E50;
+    /* Dark Blue */
     margin-bottom: 20px;
     text-align: center;
 }
 
 #accommodationDetails h2 {
     font-size: 1.5rem;
-    color: #2C3E50; /* Dark Blue */
+    color: #2C3E50;
+    /* Dark Blue */
     margin-bottom: 15px;
     text-align: center;
 }
@@ -156,7 +167,8 @@ a{
 }
 
 #accommodationDetails p strong {
-    color: #333; /* Darker Gray for labels */
+    color: #333;
+    /* Darker Gray for labels */
 }
 
 #accommodationDetails ul {
@@ -188,7 +200,8 @@ a{
 }
 
 #accommodationDetails button:hover {
-    background-color: #0056b3; /* Darker Blue */
+    background-color: #0056b3;
+    /* Darker Blue */
 }
 
 
@@ -204,9 +217,11 @@ a{
     flex-direction: column;
     gap: 15px;
 }
-#accommodationForm *{
+
+#accommodationForm * {
     margin: 5px 0;
 }
+
 #accommodationForm h2 {
     font-size: 1.8rem;
     color: #333;
@@ -248,35 +263,43 @@ a{
 #accommodationForm div {
     display: flex;
     align-items: center;
-    gap: 15px; /* Spacing between items */
-    margin-bottom: 10px; /* Space between groups */
+    gap: 15px;
+    /* Spacing between items */
+    margin-bottom: 10px;
+    /* Space between groups */
 }
 
 #accommodationForm label {
     font-weight: bold;
-    margin-right: 10px; /* Space between label and checkboxes */
-    white-space: nowrap; /* Prevent label text from wrapping */
+    margin-right: 10px;
+    /* Space between label and checkboxes */
+    white-space: nowrap;
+    /* Prevent label text from wrapping */
 }
 
 #accommodationForm input[type="checkbox"] {
-    margin-right: 5px; /* Space between checkbox and label text */
-    transform: scale(1.2); /* Make the checkboxes larger for better visibility */
-    cursor: pointer; /* Add a pointer cursor for better UX */
+    margin-right: 5px;
+    /* Space between checkbox and label text */
+    transform: scale(1.2);
+    /* Make the checkboxes larger for better visibility */
+    cursor: pointer;
+    /* Add a pointer cursor for better UX */
     width: 20px;
 }
 
-#accommodationForm div > input[type="checkbox"] + label {
+#accommodationForm div>input[type="checkbox"]+label {
     display: inline-block;
     margin-left: 5px;
 }
 
-#accommodationForm div input[type="checkbox"] + label:hover {
-    color: var(--hover); /* Change label color on hover */
+#accommodationForm div input[type="checkbox"]+label:hover {
+    color: var(--hover);
+    /* Change label color on hover */
 }
 
 
 /* No Accommodation Message */
-#noAccommodationMessage {
+#noAccommodationSection {
     text-align: center;
     padding: 20px;
     background-color: #fff;
@@ -286,19 +309,19 @@ a{
     margin: 20px auto;
 }
 
-#noAccommodationMessage h1 {
+#noAccommodationSection h1 {
     font-size: 2rem;
     color: #333;
     margin-bottom: 10px;
 }
 
-#noAccommodationMessage p {
+#noAccommodationSection p {
     font-size: 1.2rem;
     color: #555;
     margin-bottom: 20px;
 }
 
-#noAccommodationMessage button {
+#noAccommodationSection button {
     background-color: var(--primary);
     color: #fff;
     border: none;
@@ -309,7 +332,7 @@ a{
     transition: background-color 0.3s;
 }
 
-#noAccommodationMessage button:hover {
+#noAccommodationSection button:hover {
     background-color: var(--hover);
 }
 
@@ -320,6 +343,7 @@ a{
     font-weight: bold;
     text-align: end;
 }
+
 .close:hover,
 .close:focus {
     color: #000;
@@ -341,6 +365,7 @@ a{
 
 /* For screens smaller than 768px (Large Mobile) */
 @media (max-width: 768px) {
+
     #accommodationForm,
     #noAccommodationMessage {
         padding: 15px;

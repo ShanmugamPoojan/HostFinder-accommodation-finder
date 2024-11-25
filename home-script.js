@@ -4,92 +4,9 @@ const profilePage = document.getElementById("profilePage");
 
 let currentIndex = 0;
 
-function showNext() {
-    const heroSections = document.querySelector('.hero-sections');
-    currentIndex = (currentIndex + 1) % 2; // Switch between 0 and 1
-    heroSections.style.transform = `translateX(-${currentIndex * 100}%)`;
-}
-
-function showPrevious() {
-    const heroSections = document.querySelector('.hero-sections');
-    currentIndex = (currentIndex - 1 + 2) % 2; // Ensure it cycles back
-    heroSections.style.transform = `translateX(-${currentIndex * 100}%)`;
-}
-
-
-function searchAccommodation(event) {
-    event.preventDefault(); // Prevent form submission
-
-    const searchInput = document.getElementById('accommodationSearchInput').value;
-    const searchResults = document.getElementById('accommodationSearchResults');
-
-    // Clear previous results
-    searchResults.innerHTML = '';
-
-    // Fetch data from the server
-    fetch(`http://localhost:3000/api/admin/accommodation?query=${encodeURIComponent(searchInput)}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.length === 0) {
-                searchResults.innerHTML = '<p>No accommodations found.</p>';
-                return;
-            }
-
-            // Display results
-            data.forEach(accommodation => {
-                const pictures = Array.isArray(accommodation.pictures)
-                    ? accommodation.pictures
-                    : JSON.parse(accommodation.pictures || '[]');
-
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.innerHTML = `
-                    <img src="${pictures[0] || 'images/default.jpg'}" alt="${accommodation.accommodation_name}"><br>
-                    <h3>${accommodation.accommodation_name}</h3>
-                    <p><strong>Location:</strong> ${accommodation.location}</p>
-                    <p><strong>Price :</strong> ₹${accommodation.price} per room</p>
-                    <p><strong>Gender preference:</strong> ${accommodation.gender_preference}</p>
-                    <p><strong>Food Type:</strong> ${accommodation.food_type}</p>
-                    <p><strong>Total Rooms:</strong> ${accommodation.total_rooms}</p>
-                    <p><strong>Room Sharing:</strong> ${accommodation.room_sharing}</p>
-                    <p><strong>Bathroom:</strong> ${accommodation.bathroom}</p>
-                `;
-                searchResults.appendChild(card);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching accommodations:', error);
-            searchResults.innerHTML = '<p>Error fetching accommodations. Please try again later.</p>';
-        });
-}
-
-// function toggleCheckbox(element) {
-//     // Toggle the 'selected' class
-//     element.classList.toggle("selected");
-
-//     // Get the selected value and the hidden input
-//     const value = element.getAttribute("data-value");
-//     const amenitiesInput = document.getElementById("amenities");
-//     let selectedAmenities = amenitiesInput.value ? amenitiesInput.value.split(",") : [];
-
-//     // Add or remove the value from the selected list
-//     if (selectedAmenities.includes(value)) {
-//         selectedAmenities = selectedAmenities.filter(item => item !== value);
-//     } else {
-//         selectedAmenities.push(value);
-//     }
-
-//     // Update the hidden input's value
-//     amenitiesInput.value = selectedAmenities.join(",");
-// }
-
-// ----------------------------------------------------------------------------------------------------
-document.addEventListener('DOMContentLoaded', () => {
+// -------------------------------------------Display accommodation section---------------------------------------------------------
+// Function to load accommodations and populate the cards
+function loadAccommodations() {
     const accommodationsContainer = document.querySelector('.accommodations');
 
     // Fetch accommodation data from the server
@@ -106,14 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Iterate over the accommodation data and create cards
             data.forEach(accommodation => {
-                const pictures = Array.isArray(accommodation.pictures)? accommodation.pictures: JSON.parse(accommodation.pictures || '[]'); // Parse JSON
+                const pictures = Array.isArray(accommodation.pictures) ? accommodation.pictures : JSON.parse(accommodation.pictures || '[]'); // Parse JSON
 
                 const card = document.createElement('div');
                 card.classList.add('accommodation-card');
                 card.setAttribute('onclick', `onAccommodationCardClick(${accommodation.accommodation_id})`);
 
                 card.innerHTML = `
-                    <img src="${pictures[0] || 'images/default.jpg'}" alt="${accommodation.accommodation_name}">
+                    <img src="${pictures[0] || 'images/default_pg.jpg'}" alt="${accommodation.accommodation_name}" onerror="this.onerror=null; this.src='images/default_pg.jpg';">
                     <h3>${accommodation.accommodation_name}</h3>
                     <p><b>Location: </b>${accommodation.location}</p>
                     <p><b>Price: </b> ₹${accommodation.price} per room </p><br>
@@ -126,7 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => {
             console.error('Error fetching accommodations:', error);
         });
-});
+}
+
+// Event listener to call the function when the page is loaded
+document.addEventListener('DOMContentLoaded', loadAccommodations);
+
+// -----------------------------------------accommodation details display section----------------------------------------------------
 
 function onAccommodationCardClick(accommodationId) {
     fetch(`http://localhost:3000/api/accommodation/${accommodationId}`)
@@ -155,7 +77,11 @@ function openAccommodationModal(data) {
     const bathroom = data.room_sharing ? data.bathroom.split(',') : [];
 
     // Set the main image
-    document.getElementById('accommodationImage').src = pictures[0] || 'images/default.jpg';
+    const accommodationImage = document.getElementById('accommodationImage');
+    accommodationImage.src = pictures[0] || 'images/default_pg.jpg';
+    accommodationImage.onerror = () => {
+        accommodationImage.src = 'images/default_pg.jpg';
+    };
 
     // Populate thumbnails
     const thumbnailsContainer = document.getElementById('imageThumbnails');
@@ -173,7 +99,8 @@ function openAccommodationModal(data) {
 
     // Populate accommodation details
     document.getElementById('accommodationName').textContent = data.accommodation_name || 'No Name Available';
-    document.getElementById('accommodationLocation').textContent = `Location: ${data.location || 'Unknown'}`;
+    document.getElementById('accommodationLocation').textContent = data.location || 'Unknown';
+    document.getElementById('accommodationLandmark').textContent = data.landmark || 'No Landmark Provided';
     document.getElementById('accommodationPrice').textContent = data.price || 'Unknown';
     document.getElementById('accommodationDescription').textContent = data.description || 'No Description Available';
     document.getElementById('accommodationRooms').textContent = data.total_rooms || 'N/A';
@@ -200,14 +127,16 @@ function openAccommodationModal(data) {
         listItem.textContent = facility.charAt(0).toUpperCase() + facility.slice(1);
         facilitiesList.appendChild(listItem);
     });
-    
+
     const contactButton = document.querySelector('.contact-button .button');
     contactButton.onclick = () => showOwnerDetails(data.accommodation_id, data.contact);
-    
+
     // Show the modal
     document.getElementById('accommodationModal').style.display = 'block';
 
 }
+
+// -----------------------------------------accommodation owner details section----------------------------------------------------
 
 function showOwnerDetails(accommodationId, contact) {
     fetch(`http://localhost:3000/api/owner/details/${accommodationId}`)
@@ -229,18 +158,115 @@ function showOwnerDetails(accommodationId, contact) {
         });
 }
 
-
-
-function closeModal() {
-    document.getElementById('accommodationModal').style.display = 'none';
+// -----------------------------------------hero section----------------------------------------------------
+function showNext() {
+    const heroSections = document.querySelector('.hero-sections');
+    currentIndex = (currentIndex + 1) % 2; // Switch between 0 and 1
+    heroSections.style.transform = `translateX(-${currentIndex * 100}%)`;
 }
+
+function showPrevious() {
+    const heroSections = document.querySelector('.hero-sections');
+    currentIndex = (currentIndex - 1 + 2) % 2; // Ensure it cycles back
+    heroSections.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
+
+// -----------------------------------------hero section search----------------------------------------------------
+
+function searchAccommodation(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const searchInput = document.getElementById('accommodationSearchInput').value;
+    const searchResults = document.getElementById('accommodationSearchResults');
+    // const homeSearch = document.getElementsByClassName('home-search');
+
+    // Clear previous results
+    document.getElementById('home-search').style.display = 'block';
+    // homeSearch.style.display = 'block';
+    searchResults.innerHTML = '';
+
+    if (!searchInput) {
+        searchResults.innerHTML = 'No accommodations found.';
+    }
+    else {
+        // Fetch data from the server
+        fetch(`http://localhost:3000/api/admin/accommodation?query=${encodeURIComponent(searchInput)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.length === 0) {
+                    searchResults.innerHTML = '<p>No accommodations found.</p>';
+                    return;
+                }
+                // searchResults.innerHTML = '';
+
+                // Iterate over the accommodation data and create cards
+                data.forEach(accommodation => {
+                    const pictures = Array.isArray(accommodation.pictures) ? accommodation.pictures : JSON.parse(accommodation.pictures || '[]'); // Parse JSON
+
+                    const card = document.createElement('div');
+                    card.classList.add('accommodation-card');
+                    card.setAttribute('onclick', `onAccommodationCardClick(${accommodation.accommodation_id})`);
+
+                    card.innerHTML = `
+                    <img src="${pictures[0] || 'images/default_pg.jpg'}" alt="${accommodation.accommodation_name}" onerror="this.onerror=null; this.src='images/default_pg.jpg';">
+                    <h3>${accommodation.accommodation_name}</h3>
+                    <p><b>Location: </b>${accommodation.location}</p>
+                    <p><b>Price: </b> ₹${accommodation.price} per room </p><br>
+                    <p><u>Click for more details</u></p>
+                `;
+
+                    searchResults.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching accommodations:', error);
+                searchResults.innerHTML = '<p>Error fetching accommodations. Please try again later.</p>';
+            });
+
+    }
+}
+function closeHomeSearch(){
+    document.getElementById('home-search').style.display = 'none';
+    document.getElementById('accommodationSearchInput').value = '';
+
+}
+
+// -----------------------------------------accommodation filter section----------------------------------------------------
+
+// function toggleCheckbox(element) {
+//     // Toggle the 'selected' class
+//     element.classList.toggle("selected");
+
+//     // Get the selected value and the hidden input
+//     const value = element.getAttribute("data-value");
+//     const amenitiesInput = document.getElementById("amenities");
+//     let selectedAmenities = amenitiesInput.value ? amenitiesInput.value.split(",") : [];
+
+//     // Add or remove the value from the selected list
+//     if (selectedAmenities.includes(value)) {
+//         selectedAmenities = selectedAmenities.filter(item => item !== value);
+//     } else {
+//         selectedAmenities.push(value);
+//     }
+
+//     // Update the hidden input's value
+//     amenitiesInput.value = selectedAmenities.join(",");
+// }
+
+// -----------------------------------------close button----------------------------------------------------
+
 
 // Add event listeners to all elements with the "close" class
 document.addEventListener('DOMContentLoaded', () => {
     const closeButtons = document.querySelectorAll('.close');
-    
+
     closeButtons.forEach(button => {
-        button.onclick = function() {
+        button.onclick = function () {
             const modal = button.closest('.modal'); // Find the closest modal ancestor
             if (modal) {
                 modal.style.display = 'none';
@@ -250,9 +276,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 });
+// -----------------------------------------close on window click----------------------------------------------------
 
 // Function to close the modal when clicking outside of it
-window.onclick = function(event) {
+window.onclick = function (event) {
     const modals = document.querySelectorAll('.modal');
     modals.forEach(modal => {
         if (event.target === modal) {
@@ -260,6 +287,5 @@ window.onclick = function(event) {
         }
     });
 };
-
 
 // ----------------------------------------------------------------------------------------------------
