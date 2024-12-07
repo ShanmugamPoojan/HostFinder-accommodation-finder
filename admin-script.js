@@ -1,3 +1,91 @@
+// Fetch and display pending requests
+async function fetchRequests() {
+    const requestsContainer = document.getElementById("requestsContainer");
+    requestsContainer.innerHTML = "<p>Loading...</p>"; // Show a loading message
+
+    try {
+        const response = await fetch('http://localhost:3000/api/admin/accommodation-requests');
+        const requests = await response.json();
+
+        if (requests.length === 0) {
+            requestsContainer.innerHTML = "<p>No pending requests</p>";
+            return;
+        }
+
+        requestsContainer.innerHTML = ''; // Clear the loading message
+
+        requests.forEach(request => {
+            const requestDiv = document.createElement('div');
+            requestDiv.classList.add('request-item');
+            requestDiv.innerHTML = `
+                <h3>${request.accommodation_name}</h3>
+                <p><strong>Price:</strong> ₹${request.price}</p>
+                <p><strong>Location:</strong> ${request.location}</p>
+                <p><strong>Address:</strong> ${request.address}</p>
+                <p><strong>Contact:</strong> ${request.contact}</p>
+                <p><strong>Description:</strong> ${request.description}</p>
+                <div class="request-actions">
+                    <button class="approve" onclick="approveRequest(${request.request_id})">Approve</button>
+                    <button class="reject" onclick="rejectRequest(${request.request_id})">Reject</button>
+                </div>
+            `;
+
+            requestsContainer.appendChild(requestDiv);
+        });
+    } catch (error) {
+        console.error("Error fetching requests:", error);
+        requestsContainer.innerHTML = "<p>Failed to load requests.</p>";
+    }
+}
+
+// Approve a request
+async function approveRequest(requestId) {
+    if (!confirm("Are you sure you want to approve this request?")) return;
+
+    try {
+        const response = await fetch('http://localhost:3000/api/admin/approve-accommodation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ request_id: requestId }),
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            alert("Request approved successfully!");
+            fetchRequests(); // Refresh the list
+        } else {
+            alert("Failed to approve request.");
+        }
+    } catch (error) {
+        console.error("Error approving request:", error);
+    }
+}
+
+// Reject a request
+async function rejectRequest(requestId) {
+    if (!confirm("Are you sure you want to reject this request?")) return;
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/admin/reject-accommodation/${requestId}`, {
+            method: 'DELETE',
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            alert("Request rejected successfully!");
+            fetchRequests(); // Refresh the list
+        } else {
+            alert("Failed to reject request.");
+        }
+    } catch (error) {
+        console.error("Error rejecting request:", error);
+    }
+}
+
+// Load requests on page load
+window.onload = fetchRequests;
+
+
 function openSearch() {
     const searchSection = document.getElementById('searchSection');
     searchSection.style.display = 'block'; // Show the search section

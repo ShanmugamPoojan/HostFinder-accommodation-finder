@@ -20,7 +20,9 @@
             <div>
                 <a href="#" onclick="openHomePage()">Home</a>
                 <a href="#footer">Contact</a>
-                <a href="#" onclick="openLoginModal()">Login in</a>
+                <a href="#footer" onclick="openLoginModal()">Login</a>
+                <!-- <a href="#" id="login" onclick="openLoginModal()" style="display: block;">Login</a>
+                <a href="#" id="logout" onclick="logout()" style="display: none;">Logout</a> -->
             </div>
         </div>
         <!-- <h1>Welcome, Owner</h1> -->
@@ -31,15 +33,16 @@
             <p>Add your first accommodation to manage your listings!</p>
             <button onclick="addAccommodation()">Add Accommodation</button>
             <button onclick="logout()">Logout</button>
-            
+
         </div>
-        
+
         <div id="ownerAccommodationSection" style="display: none;">
             <h1>Your Accommodation</h1>
             <div id="accommodationDetails">
                 <h2 id="accommodationName"></h2>
                 <p><strong>Price:</strong> <span id="price"></span></p>
                 <p><strong>Location:</strong> <span id="location"></span></p>
+                <p><strong>Address:</strong> <span id="address"></span></p>
                 <p><strong>Landmark:</strong> <span id="landmark"></span></p>
                 <p><strong>Description:</strong> <span id="description"></span></p>
                 <p><strong>Total Rooms:</strong> <span id="totalRooms"></span></p>
@@ -55,6 +58,7 @@
                 <div>
                     <button onclick="editAccommodation()">Edit</button>
                     <button onclick="logout()">Logout</button>
+
                 </div>
             </div>
         </div>
@@ -65,6 +69,7 @@
             <input type="text" id="accommodationNameInput" placeholder="Accommodation Name" required>
             <input type="number" id="priceInput" placeholder="Price" required>
             <input type="text" id="locationInput" placeholder="Location" required>
+            <input type="text" id="addressInput" placeholder="Address" required>
             <input type="text" id="landmarkInput" placeholder="Landmark (optional)">
             <textarea id="descriptionInput" placeholder="Description" required></textarea>
             <input type="number" id="totalRoomsInput" placeholder="Total Rooms" required>
@@ -135,7 +140,7 @@
             <u>Instagram</u><br>
             <u>Twitter</u>
         </p><br>
-        <p>Designed and developed by suman_s :)</p>
+        <p>Designed and developed by Suman&#9829;</p>
         <br>
         <p>&copy; 2024 HostFinder. All rights reserved.</p>
     </footer>

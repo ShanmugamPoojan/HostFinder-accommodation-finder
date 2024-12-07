@@ -12,78 +12,99 @@
 </head>
 
 <body>
+    <div id="logobar">
+        <a href="#" id="logo">RoommateFinder</a>
+    </div>
+    <div class="navbar">
+        <div>
+            <a href="index.html">HostFinder</a>
+            <a href="#logobar">Home</a>
+            <!-- <a href="#footer">Contact</a> -->
+            <a href="#" onclick="openLoginModal()">Login</a>
+
+        </div>
+    </div>
     <main id="bg">
-
-        <div id="logobar">
-            <a href="#" id="logo">RoommateFinder</a>
-        </div>
-        <div class="navbar">
-            <div>
-                <a href="index.html">HostFinder</a>
-                <a href="#logobar">Home</a>
-                <!-- <a href="#footer">Contact</a> -->
-                <a href="#" onclick="openLoginModal()">Login</a>
-
+        <div id="roommateRequest" class="section" style="display: none;">
+            <h2>Your Roommate Request</h2>
+        
+            <div id="requestDetails" style="display: none;">
+                <div class="request-detail">
+                    <span>Name:</span> <span id="requestName"></span>
+                </div>
+                <div class="request-detail">
+                    <span>Age:</span> <span id="requestAge"></span>
+                </div>
+                <div class="request-detail">
+                    <span>Gender:</span> <span id="requestGender"></span>
+                </div>
+                <div class="request-detail">
+                    <span>Profession:</span> <span id="requestProfession"></span>
+                </div>
+                <div class="request-detail">
+                    <span>Room Sharing:</span> <span id="requestRoomSharing"></span>
+                </div>
+                <div class="request-detail">
+                    <span>Location:</span> <span id="requestLocation"></span>
+                </div>
+                <div class="request-detail">
+                    <span>Description:</span> <span id="requestDescription"></span>
+                </div>
+                <div class="request-detail">
+                    <span>Requirements:</span> <span id="requestRequirements"></span>
+                </div>
+                <div class="request-detail">
+                    <span>Contact:</span> <span id="requestContact"></span>
+                </div>
+                <div class="request-detail">
+                    <span>Email:</span> <span id="requestEmail"></span>
+                </div>
+                <div class="request-detail">
+                    <span>Pictures:</span> <span id="requestPictures"></span>
+                </div>
+        
+                <button class="edit" onclick="showEditForm()">Edit Request</button>
             </div>
-        </div>
-
-        <!-- Roommate Request Section -->
-        <section id="userRoommateRequest" style="display: none;">
-            <div class="request-header">
-                <h2>Your Roommate Request</h2>
-                <button class="edit-button" id="editRequestButton" onclick="editRoommateRequest()">Edit</button>
-            </div>
-
-            <div class="request-details" id="requestDetails">
-                <!-- Details displayed dynamically -->
-                <p><strong>Name:</strong> <span id="requestName"></span></p>
-                <p><strong>Age:</strong> <span id="requestAge"></span></p>
-                <p><strong>Gender:</strong> <span id="requestGender"></span></p>
-                <p><strong>Profession:</strong> <span id="requestProfession"></span></p>
-                <p><strong>Room Sharing:</strong> <span id="requestRoomSharing"></span></p>
-                <p><strong>Location:</strong> <span id="requestLocation"></span></p>
-                <p><strong>Description:</strong> <span id="requestDescription"></span></p>
-                <p><strong>Requirements:</strong> <span id="requestRequirements"></span></p>
-                <p><strong>Contact:</strong> <span id="requestContact"></span></p>
-                <p><strong>Email:</strong> <span id="requestEmail"></span></p>
-                <p><strong>Pictures:</strong> <span id="requestPictures"></span></p>
-                <button class="edit-button" id="logoutButton" style="display: none;" onclick="logout()">Logout</button>
-
-            </div>
-
-            <form id="editRequestForm" style="display: none;" onsubmit="saveRoommateRequest(event)">
+        
+            <form id="editRequestForm">
                 <input type="text" id="editName" placeholder="Name" required>
                 <input type="number" id="editAge" placeholder="Age" required>
-                <select id="editGender">
-                    <!-- <option value="">Gender</option> -->
+                <select id="editGender" required>
+                    <option value="">Select Gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
                 </select>
                 <input type="text" id="editProfession" placeholder="Profession" required>
-                <select id="editRoomSharing" multiple>
-                    <option value="singel">Single</option>
-                    <option value="double">Double</option>
-                    <option value="triple">Triple</option>
-                </select>
+                <input type="text" id="editRoomSharing" placeholder="Room Sharing (e.g., double,triple)" required>
                 <input type="text" id="editLocation" placeholder="Location" required>
                 <textarea id="editDescription" placeholder="Description"></textarea>
                 <textarea id="editRequirements" placeholder="Requirements"></textarea>
-                <input type="tel" id="editContact" placeholder="Contact Number" required>
-                <input type="email" id="editEmail" placeholder="Email" required>
-                <input type="text" id="editPictures" placeholder="Pictures" required>
-                <button type="submit" class="button">Save</button>
-                <button onclick="closeRoommateRequest()" class="button">Cancle</button>
+                <input type="text" id="editContact" placeholder="Contact" required>
+                <input type="email" id="editEmail" placeholder="Email">
+                <input type="text" id="editPictures" placeholder="Pictures (Comma-separated URLs)">
+                <button type="submit">Save Request</button>
+                <button onclick="closeEditForm()">Cancel</button>
             </form>
+        
+            <button id="logoutButton" class="logout" onclick="logout()">Logout</button>
+        </div>
+
+        <section class="hero">
+            <h1>Looking for a roommate?</h1>
+            <h2>We've got you covered.</h2>
+            <p>Finding a suitable roommate in an unfamiliar location can be challenging.
+                <br>The Roommate Matching feature is designed to facilitate users in finding compatible roommates based on their preferences and
+                requirements. This feature is particularly useful for students, professionals, and individuals looking
+                for shared accommodations.</p>
         </section>
 
-
-        <div style="text-align: center; color:#333;">
+        <section class="section">
             <h1>Suggestions</h1>
-        </div>
-        <div class="roommates">
-            <!-- Roommate cards dynamically added here -->
-        </div>
+            <div class="roommates">
+                <!-- Roommate cards dynamically added here -->
+            </div>
+        </section>
 
         <!-- Roommate Details Modal -->
         <div id="roommateModal" class="modal">
@@ -145,7 +166,7 @@
                 <p>Already have an account? <a href="#" onclick="openLoginModal()">Login here</a></p>
             </div>
         </div>
-
+        
     </main>
 
     <footer id="footer">
@@ -154,9 +175,9 @@
             <u>Facebook</u><br>
             <u>Instagram</u><br>
             <u>Twitter</u>
-        </p><br>
-        <p>Designed and developed by suman_s :)</p>
-        <br>
+        </p>
+        <p>Designed and developed by Suman&#9829;</p>
+        
         <p>&copy; 2024 HostFinder. All rights reserved.</p>
     </footer>
 

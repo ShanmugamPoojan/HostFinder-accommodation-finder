@@ -62,6 +62,57 @@ section{
     padding: 50px 0; 
 }
 
+.requests-container {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.request-item {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.request-item h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.request-item p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.request-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.request-actions button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.request-actions .approve {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.request-actions .reject {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+
 .admin-search {
     margin: 20px;
     padding: 5px 20px;

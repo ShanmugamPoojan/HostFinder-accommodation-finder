@@ -32,7 +32,7 @@ function loadAccommodations() {
                 card.innerHTML = `
                     <img src="${pictures[0] || 'images/default_pg.jpg'}" alt="${accommodation.accommodation_name}" onerror="this.onerror=null; this.src='images/default_pg.jpg';">
                     <h3>${accommodation.accommodation_name}</h3>
-                    <p><b>Location: </b>${accommodation.location}</p>
+                    <p><b>Address: </b>${accommodation.address}</p>
                     <p><b>Price: </b> ₹${accommodation.price} per room </p><br>
                     <p><u>Click for more details</u></p>
                 `;
@@ -99,7 +99,7 @@ function openAccommodationModal(data) {
 
     // Populate accommodation details
     document.getElementById('accommodationName').textContent = data.accommodation_name || 'No Name Available';
-    document.getElementById('accommodationLocation').textContent = data.location || 'Unknown';
+    document.getElementById('accommodationAddress').textContent = data.address || 'Unknown';
     document.getElementById('accommodationLandmark').textContent = data.landmark || 'No Landmark Provided';
     document.getElementById('accommodationPrice').textContent = data.price || 'Unknown';
     document.getElementById('accommodationDescription').textContent = data.description || 'No Description Available';
@@ -215,7 +215,7 @@ function searchAccommodation(event) {
                     card.innerHTML = `
                     <img src="${pictures[0] || 'images/default_pg.jpg'}" alt="${accommodation.accommodation_name}" onerror="this.onerror=null; this.src='images/default_pg.jpg';">
                     <h3>${accommodation.accommodation_name}</h3>
-                    <p><b>Location: </b>${accommodation.location}</p>
+                    <p><b>Address: </b>${accommodation.address}</p>
                     <p><b>Price: </b> ₹${accommodation.price} per room </p><br>
                     <p><u>Click for more details</u></p>
                 `;

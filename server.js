@@ -189,7 +189,64 @@ app.get('/api/accommodation/:owner_id', (req, res) => {
     });
 });
 
-// ---------------------------owner page edit accommodation details------------------------------------
+// ---------------------------owner page request edit accommodation details------------------------------------
+
+// Route to add accommodation request
+app.post('/api/accommodation-requests', (req, res) => {
+    const {
+        owner_id,
+        accommodation_name,
+        price,
+        location,
+        address,
+        landmark,
+        description,
+        total_rooms,
+        gender_preference,
+        food_type,
+        room_sharing,
+        bathroom,
+        restrictions,
+        facilities,
+        pictures,
+        contact
+    } = req.body;
+
+    const query = `
+        INSERT INTO accommodation_requests (
+            owner_id, accommodation_name, price, location, address, landmark, description, 
+            total_rooms, gender_preference, food_type, room_sharing, bathroom, restrictions, 
+            facilities, pictures, contact
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    `;
+
+    db.query(query, [
+        owner_id,
+        accommodation_name,
+        price,
+        location,
+        address,
+        landmark,
+        description,
+        total_rooms,
+        gender_preference,
+        food_type,
+        room_sharing,
+        bathroom,
+        restrictions,
+        JSON.stringify(facilities), // Assuming facilities is an array
+        JSON.stringify(pictures),   // Assuming pictures is an array
+        contact
+    ], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+
+        res.json({ success: true, message: 'Accommodation request submitted successfully' });
+    });
+});
+
 
 app.put('/api/accommodation/:id', (req, res) => {
     const accommodationId = req.params.id;
@@ -197,6 +254,7 @@ app.put('/api/accommodation/:id', (req, res) => {
         accommodation_name,
         price,
         location,
+        address,
         landmark,
         description,
         total_rooms,
@@ -217,6 +275,7 @@ app.put('/api/accommodation/:id', (req, res) => {
             accommodation_name = ?, 
             price = ?, 
             location = ?, 
+            address = ?, 
             landmark = ?, 
             description = ?, 
             total_rooms = ?, 
@@ -230,12 +289,13 @@ app.put('/api/accommodation/:id', (req, res) => {
             contact = ?
         WHERE accommodation_id = ?;
     `;
-    
+
     // Execute the query with the provided data
     db.query(query, [
         accommodation_name,
         price,
         location,
+        address,
         landmark,
         description,
         total_rooms,
@@ -294,7 +354,7 @@ app.get('/api/roommate/:id', (req, res) => {
 
 // ---------------------------roommate page login and register------------------------------------
 
-app.post('/api/roommate/login', (req, res) => {
+app.post('/api/user/login', (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -341,21 +401,22 @@ app.post('/api/user/register', (req, res) => {
 
 // ---------------------------roommate page edit details------------------------------------
 
-// app.get('/api/roommate_requests/:user_id', (req, res) => {
-//     const userId = req.params.user_id;
-//     const query = 'SELECT * FROM roommate_requests WHERE user_id = ?';
+app.get('/api/roommate_requests/:user_id', (req, res) => {
+    const userId = req.params.user_id;
+    const query = 'SELECT * FROM roommate_requests WHERE user_id = ?';
 
-//     db.query(query, [userId], (err, results) => {
-//         if (err) {
-//             res.status(500).json({ error: 'Database error' });
-//         } else {
-//             res.json(results[0] || null);
-//         }
-//     });
-// });
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            res.status(500).json({ error: 'Database error' });
+        } else {
+            res.json(results[0] || null);
+        }
+    });
+});
+
 app.post('/api/roommate_requests/:user_id', (req, res) => {
     const userId = req.params.user_id;
-    const { name, age, gender, profession, room_sharing, location, description, requirements, contact, email, pictures } = req.body;
+    const { name, age, gender, profession, room_sharing,location, address, description, requirements, contact, email, pictures } = req.body;
 
     const checkQuery = `SELECT * FROM roommate_requests WHERE user_id = ?`;
     db.query(checkQuery, [userId], (err, results) => {
@@ -373,6 +434,7 @@ app.post('/api/roommate_requests/:user_id', (req, res) => {
                     profession = ?, 
                     room_sharing = ?, 
                     location = ?, 
+                    address = ?, 
                     description = ?, 
                     requirements = ?, 
                     contact = ?,
@@ -380,7 +442,7 @@ app.post('/api/roommate_requests/:user_id', (req, res) => {
                     pictures = ?
                 WHERE user_id = ?
             `;
-            db.query(updateQuery, [name, age, gender, profession, room_sharing, location, description, requirements, contact, email, pictures, userId], (err, results) => {
+            db.query(updateQuery, [name, age, gender, profession, room_sharing, location, address, description, requirements, contact, email, pictures, userId], (err, results) => {
                 if (err) {
                     console.error('Database error:', err);
                     res.status(500).json({ error: 'Database error' });
@@ -391,10 +453,10 @@ app.post('/api/roommate_requests/:user_id', (req, res) => {
         } else {
             // Record does not exist, insert a new one
             const insertQuery = `
-                INSERT INTO roommate_requests (user_id, name, age, gender, profession, room_sharing, location, description, requirements, contact, email, pictures)
+                INSERT INTO roommate_requests (user_id, name, age, gender, profession, room_sharing,location, address, description, requirements, contact, email, pictures)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `;
-            db.query(insertQuery, [userId, name, age, gender, profession, room_sharing, location, description, requirements, contact, email, pictures], (err, results) => {
+            db.query(insertQuery, [userId, name, age, gender, profession, room_sharing, location, address, description, requirements, contact, email, pictures], (err, results) => {
                 if (err) {
                     console.error('Database error:', err);
                     res.status(500).json({ error: 'Database error' });
@@ -407,6 +469,41 @@ app.post('/api/roommate_requests/:user_id', (req, res) => {
 });
 
 // ---------------------------------------admin page delete -----------------------------
+
+
+// Route to get all pending accommodation requests
+app.get('/api/admin/accommodation-requests', (req, res) => {
+    const query = `SELECT * FROM accommodation_requests`;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+
+        res.json(results);
+    });
+});
+
+// Reject an accommodation request
+app.delete('/api/admin/reject-accommodation/:id', (req, res) => {
+    const requestId = req.params.id;
+
+    const query = `DELETE FROM accommodation_requests WHERE request_id = ?`;
+    db.query(query, [requestId], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: 'Request not found' });
+        }
+
+        res.json({ success: true, message: 'Request rejected successfully' });
+    });
+});
+
 
 app.delete('/api/accommodation/:id', (req, res) => {
     const query = 'DELETE FROM accommodation WHERE accommodation_id = ?';
@@ -436,12 +533,28 @@ app.delete('/api/roommate/:id', (req, res) => {
 
 app.get('/api/admin/accommodation', (req, res) => {
     const { query } = req.query; // Get the search query from the URL
+
     if (!query) {
         return res.status(400).json({ error: 'Search query is required' });
     }
 
-    const sql = 'SELECT * FROM accommodation WHERE accommodation_name LIKE ?';
-    db.query(sql, [`%${query}%`], (err, results) => {
+    const sql = `
+        SELECT * 
+        FROM accommodation 
+        WHERE 
+            accommodation_name LIKE ? 
+            OR location LIKE ?
+            OR address LIKE ?
+            OR landmark LIKE ?
+            OR description LIKE ?
+            OR facilities LIKE ?
+            OR restrictions LIKE ?
+    `;
+
+    // Prepare the values for each search field
+    const searchQuery = `%${query}%`;
+
+    db.query(sql, [searchQuery, searchQuery, searchQuery, searchQuery, searchQuery, searchQuery, searchQuery], (err, results) => {
         if (err) {
             console.error('Error fetching accommodation:', err);
             return res.status(500).json({ error: 'Database error' });
@@ -449,6 +562,7 @@ app.get('/api/admin/accommodation', (req, res) => {
         res.json(results);
     });
 });
+
 
 app.get('/api/admin/user', (req, res) => {
     const { query } = req.query; // Get the search query from the URL
@@ -465,6 +579,47 @@ app.get('/api/admin/user', (req, res) => {
         res.json(results);
     });
 });
+
+
+
+
+app.get('/api/locations', (req, res) => {
+    const query = 'SELECT DISTINCT location FROM location';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.json(results); // Return the list of locations
+    });
+});
+
+// Fetch accommodations for a specific location
+app.get('/api/accommodation-location', (req, res) => {
+    const location = req.query.location;
+    const query = `SELECT 
+                    a.accommodation_id, 
+                    a.accommodation_name, 
+                    a.address,
+                    a.price,
+                    a.total_rooms,
+                    a.pictures,
+                    a.contact,
+                    a.location, 
+                    l.latitude, 
+                    l.longitude
+                FROM accommodation a
+                JOIN location l ON a.accommodation_id = l.accommodation_id
+                WHERE l.location = ?`;
+    db.query(query, [location], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.json(results);
+    });
+});
+
 
 // Start the server
 app.listen(PORT, () => {

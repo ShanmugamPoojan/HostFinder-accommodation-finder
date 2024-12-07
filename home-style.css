@@ -73,7 +73,7 @@ a{
 /* Hero Section */
 .hero {
     padding: 80px 20px;
-    margin-bottom: 50px;
+    /* margin: 10px 0; */
     color: white; 
     text-align: center;
     background-image: url(images/hero1.jpg);
@@ -102,6 +102,14 @@ a{
     margin-bottom: 30px;
 }
 
+.section{
+    padding: 50px 0px;
+}
+.section > h1{
+    font-size: 3em;
+    margin: 10px 40px;
+    border-bottom: 2px solid black;
+}
 
 #roomate-finder {
     background-size: cover;
@@ -190,75 +198,91 @@ a{
 #accommodationSearchInput{
     margin: 20px;
     padding: 15px 20px;
-    /* height: 50px; */
-    width: 50vw;
-
+    width: 50%;
     font-size: large;
 
     border: none;
+    /* border: 2px solid black; */
+
     border-radius: 100px;
 }
 
 
 /* Filter Section */
+#search{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    min-height: 500px;
+
+    /* border: 2px solid black; */
+    /* gap: 10px; */
+}
+
+#search > section{
+    /* margin: 20px; */
+    min-height: 500px;
+    /* box-shadow: 5px 5px 10px gray; */
+}
+#map{
+    width: 100vw;
+    /* height: 100%; */
+    margin: 20px;
+    border-radius:40px;
+    box-shadow: 0 0 10px gray;
+}
+#filterForm{
+    z-index: 1000;
+}
 .filter-section {
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 10px;
+    width: 25vw;
+    padding: 20px 40px;
     text-align: center;
-    margin: 20px auto;
-    max-width: 600px;
+    position: absolute;
+    left: 0;
+    z-index: 10;
+    /* margin: 20px 0 20px 20px; */
+    /* background-color: #fff; */
+    /* border-radius: 40px 0 0 40px; */
+    /* top: 0; */
+    /* max-width: 50vw; */
+
+    /* border: 2px solid black; */
+}
+.filter-section select {
+    margin: 5px auto;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    width: 100%;
 }
 
-.filter-section h2 {
-    margin-bottom: 15px;
-    font-size: 1.5rem;
-}
-
-.filter-section form {
+#accommodationList{
+    margin: 10px auto;
+    width: 100%;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.filter-section label {
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-.filter-section select,
-.filter-section input[type="checkbox"],
-.filter-section button {
-    margin: 5px 0;
-    padding: 8px;
-    font-size: 1rem;
-    border-radius: 5px;
-}
-
-.filter-section button {
-    width: fit-content;
-    align-self: center;
-}
-
-/* Style the checkbox buttons */
-.checkbox-container {
-    display: flex;
     justify-content: center;
-    gap: 15px;
+    flex-wrap: wrap;
+    border-radius: 20px;
+    box-shadow:  0 0 10px gray;
 }
-
-.checkbox-button {
-    padding: 10px 15px;
-    background-color: #e0e0e0;
-    border-radius: 5px;
+#accommodationList > div{
+    padding: 10px;
+    width: 100%;
+    border-bottom: 1px solid black;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s, color 0.3s;
 }
-
-.checkbox-button.selected {
-    background-color: #007bff;
-    color: #fff;
+#accommodationList > div:first-child{
+    border-radius: 20px 20px 0 0;
+}
+#accommodationList > div:last-child{
+    border-bottom: none;
+    border-radius: 0 0 20px 20px;
+}
+#accommodationList > div:hover{
+    background-color: #e0e0e0;
 }
 
 
@@ -405,7 +429,7 @@ a{
 #home-search {
     margin: 20px;
     padding: 20px;
-    background-color: rgb(220, 220, 220);
+    background-color: #e0e0e0;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -416,27 +440,6 @@ a{
     transition: opacity 0.5s ease, height 0.5s ease;
     overflow: hidden; /* Prevents content from spilling out during the height transition */
 }
-
-/* .home-search input {
-    padding: 10px;
-    width: 50%;
-    font-size: 1rem;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-} 
-.search-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: white;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.search-button:hover {
-    background-color: #0056b3;
-} */
 
 #accommodationSearchInput{
     margin: 20px auto;
@@ -515,7 +518,8 @@ a{
 }
 .about-image>img{
     width: 100%;
-    height: 400px;
+    height: 100%;
+    /* height: 400px; */
     object-fit: cover;
 }
 .about-info{

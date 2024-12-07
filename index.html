@@ -4,8 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
+            key: "AIzaSyDLGBIdFzZTw0OoopeUXSC5S6HG_1KHQ8w",
+            v: "weekly",
+        });
+    </script>
+
+
     <title>HostFinder - Find Your Perfect Accommodation</title>
     <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="home-style.css">
 </head>
 
@@ -33,7 +42,7 @@
                     <p>Find the perfect place to stay from our extensive list of accommodations tailored to meet your
                         needs.</p>
                     <form id="searchForm" oninput="searchAccommodation(event)" onsubmit="searchAccommodation(event)">
-                        <input type="text" id="accommodationSearchInput" placeholder="Search accommodation name"">
+                        <input type="text" id="accommodationSearchInput" placeholder="Search accommodation"">
                     </form>
                 </section>
 
@@ -48,43 +57,9 @@
             <button class="nav-btn next" onclick="showNext()">&#10095;</button>
         </div>
 
-        <!--------------------------------- Filter section ----------------------------------------->
-
-        <!-- <section class="filter-section">
-            <h2>Filter Accommodations</h2>
-            <form id="filterForm" onsubmit="filterAccommodations(event)">
-                <label for="priceRange">Price Range:</label>
-                <select id="priceRange" name="priceRange">
-                    <option value="all">All</option>
-                    <option value="low">Below $500</option>
-                    <option value="medium">$500 - $1000</option>
-                    <option value="high">Above $1000</option>
-                </select>
-
-                <label for="roomType">Room Type:</label>
-                <select id="roomType" name="roomType">
-                    <option value="all">All</option>
-                    <option value="single">Single</option>
-                    <option value="double">Double</option>
-                    <option value="suite">Suite</option>
-                </select>
-
-                <label for="amenities">Amenities:</label>
-                <div class="checkbox-container">
-                    <div class="checkbox-button" data-value="wifi" onclick="toggleCheckbox(this)">Wi-Fi</div>
-                    <div class="checkbox-button" data-value="laundry" onclick="toggleCheckbox(this)">Laundry</div>
-                    <div class="checkbox-button" data-value="security" onclick="toggleCheckbox(this)">24/7 Security
-                    </div>
-                </div>
-                <input type="hidden" id="amenities" name="amenities" value="">
-
-                <button type="submit" class="button">Apply Filters</button>
-            </form>
-        </section> -->
-
         <!--------------------------------- Search results display ----------------------------------------->
 
-        <section id="home-search" style="display: none;">
+          <section id="home-search" style="display: none;">
             <h2>Search results</h2>
             <div id="accommodationSearchResults" class="results">
                 <!-- Search results will be displayed here -->
@@ -92,13 +67,29 @@
             <button class="button" onclick="closeHomeSearch()">Close</button>
         </section>
 
+        <!--------------------------------- Filter section ----------------------------------------->
+
+        <section id="search">
+            <section class="filter-section">
+                <form id="filterForm" onchange="filterAccommodations(event)">
+                    <select id="locationDropdown" name="locationDropdown">
+                        <option value="">Select location</option>
+                    </select>
+                </form>
+                <div id="accommodationList">
+                </div>
+            </section>
+            <section id="map">
+            </section>
+        </section>
+
         <!--------------------------------- Accommodations display section ----------------------------------------->
 
-        <div style="text-align: center;">
+        <section class="section">
             <h1>Suggestions</h1>
-        </div>
-        <section class="accommodations">
-            <!-- accommodaiton cards -->
+            <section class="accommodations">
+                <!-- accommodaiton cards -->
+            </section>
         </section>
 
         <!-- Accommodation Details Modal -->
@@ -116,7 +107,7 @@
                     <div class="details-section">
                         <span class="close">&times;</span>
                         <h2 id="accommodationName"></h2>
-                        <p><strong>Location:</strong> <span id="accommodationLocation"></span></p>
+                        <p><strong>Address:</strong> <span id="accommodationAddress"></span></p>
                         <hr>
                         <p><strong>Landmark:</strong> <span id="accommodationLandmark"></span></p>
                         <p><strong>Price:</strong>₹<span id="accommodationPrice"></span> per room <br>
@@ -139,7 +130,7 @@
             </div>
         </div>
 
-       <!--------------------------------- About section ----------------------------------------->
+        <!--------------------------------- About section ----------------------------------------->
 
         <section id="about">
             <div id="host-about">
@@ -189,8 +180,11 @@
                     <img src="images/about2.jpg" alt="image">
                 </div>
             </div>
-
         </section>
+
+        <!-- <section id="contact">
+            <button onclick="window.location.href = 'owner.html'" class="button">Post your accommodation</button>
+        </section> -->
     </main>
 
     <!--------------------------------- Footer section ----------------------------------------->
@@ -202,12 +196,13 @@
             <u>Instagram</u><br>
             <u>Twitter</u>
         </p><br>
-        <p>Designed and developed by suman_s :)</p>
+        <p>Designed and developed by Suman&#9829;</p>
         <br>
         <p>&copy; 2024 HostFinder. All rights reserved.</p>
     </footer>
 
     <script src="home-script.js"></script>
+    <script src="map.js"></script>
 
 </body>
 

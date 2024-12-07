@@ -19,6 +19,7 @@ function openRegisterModal() {
 
 document.addEventListener("DOMContentLoaded", () => {
     if (ownerId) {
+        console.log(ownerId);
         displayAccommodations();
     } else {
         document.getElementById("noAccommodationSection").style.display = "block";
@@ -60,6 +61,8 @@ function login() {
         if (data.success) {
             alert("Login successful!");
             localStorage.setItem('owner_id', data.owner_id); // Store owner_id in localStorage
+            // document.getElementById("login").style.display = "none";
+            // document.getElementById("logout").style.display = "block";
             window.location.reload(); // Reload the page after successful login
         } else {
             alert(data.message || "Invalid email or password.");
@@ -122,6 +125,7 @@ window.location.href = "index.html";
 
 // Add new accommodation
 function addAccommodation() {
+    const ownerId = localStorage.getItem("owner_id");
     if (!ownerId) {
         openLoginModal()
     } else {
@@ -146,6 +150,7 @@ function saveAccommodation(event) {
         accommodation_name: document.getElementById("accommodationNameInput").value,
         price: document.getElementById("priceInput").value,
         location: document.getElementById("locationInput").value,
+        address: document.getElementById("addressInput").value,
         landmark: document.getElementById("landmarkInput")?.value || "", // Optional landmark
         description: document.getElementById("descriptionInput").value,
         total_rooms: document.getElementById("totalRoomsInput").value,
@@ -188,10 +193,62 @@ function saveAccommodation(event) {
         });  
 }
 
+async function addAccommodationRequest(event) {
+    event.preventDefault(); // Prevent the form from refreshing the page
+
+    // Collect input values from the form
+    const data = {
+        owner_id: localStorage.getItem("owner_id"), // Assuming owner_id is stored in local storage after login
+        accommodation_name: document.getElementById("accommodationNameInput").value,
+        price: document.getElementById("priceInput").value,
+        location: document.getElementById("locationInput").value,
+        address: document.getElementById("addressInput").value,
+        landmark: document.getElementById("landmarkInput").value,
+        description: document.getElementById("descriptionInput").value,
+        total_rooms: document.getElementById("totalRoomsInput").value,
+        gender_preference: document.getElementById("genderPreferenceInput").value,
+        food_type: document.getElementById("foodTypeInput").value,
+        room_sharing: Array.from(document.querySelectorAll("input[name='roomSharing']:checked"))
+            .map(checkbox => checkbox.value)
+            .join(","),
+        bathroom: Array.from(document.querySelectorAll("input[name='bathroom']:checked"))
+            .map(checkbox => checkbox.value)
+            .join(","),
+        restrictions: document.getElementById("restrictionsInput").value,
+        facilities: document.getElementById("facilitiesInput").value.split(","),
+        pictures: document.getElementById("picturesInput").value.split(","),
+        contact: document.getElementById("contactInput").value,
+    };
+
+    try {
+        const response = await fetch("http://localhost:3000/api/accommodation-requests", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert("Accommodation request submitted successfully!");
+            document.getElementById("accommodationForm").reset(); // Reset the form fields
+        } else {
+            alert(result.message || "Failed to submit accommodation request.");
+        }
+    } catch (error) {
+        console.error("Error submitting accommodation request:", error);
+        alert("An error occurred. Please try again.");
+    }
+}
+
+
 // Populate the Accommodation Form for Editing
 function editAccommodation() {
     const accommodationForm = document.getElementById("accommodationForm");
     const accommodationSection = document.getElementById("ownerAccommodationSection");
+    const noAccommodationSection = document.getElementById("noAccommodationSection");
 
     accommodationSection.style.display = "none";
     accommodationForm.style.display = "block";
@@ -203,6 +260,7 @@ function editAccommodation() {
                 document.getElementById("accommodationNameInput").value = data.accommodation_name || "";
                 document.getElementById("priceInput").value = data.price || "";
                 document.getElementById("locationInput").value = data.location || "";
+                document.getElementById("addressInput").value = data.address || "";
                 document.getElementById("landmarkInput").value = data.landmark || ""; // Populate landmark
                 document.getElementById("descriptionInput").value = data.description || "";
                 document.getElementById("totalRoomsInput").value = data.total_rooms || "";
@@ -245,25 +303,7 @@ function cancelEdit() {
     accommodationSection.style.display = "block";
 }
 
-// Fetch Accommodation Data and Display
-// function displayAccommodations() {
-//     const ownerId = localStorage.getItem("owner_id"); // Assuming owner_id is stored in localStorage
-//     const accommodationSection = document.getElementById("ownerAccommodationSection");
-//     const noAccommodationSection = document.getElementById("noAccommodationSection");
 
-//     fetch(`http://localhost:3000/api/accommodation/${ownerId}`)
-//         .then(response => response.json())
-//         .then(data => {
-//             if (data) {
-//                 populateAccommodationDetails(data);
-//                 accommodationSection.style.display = "block";
-//             } else {
-//                 noAccommodationSection.style.display = "block";
-//                 accommodationSection.style.display = "none";
-//             }
-//         })
-//         .catch(error => console.error("Error fetching accommodation data:", error));
-// }
 function displayAccommodations() {
     const ownerId = localStorage.getItem("owner_id"); // Get owner ID from localStorage
     const accommodationSection = document.getElementById("ownerAccommodationSection");
@@ -287,7 +327,9 @@ function displayAccommodations() {
             return response.json();
         })
         .then(data => {
-            if (data && data.length > 0) {
+            // if (data && data.length > 0) {
+            if (data) {
+                // console.log(data);
                 // If accommodation data is found, display it
                 populateAccommodationDetails(data);
                 accommodationSection.style.display = "block";
@@ -306,6 +348,7 @@ function displayAccommodations() {
 
 // Populate Accommodation Details Section
 function populateAccommodationDetails(data) {
+    // console.log(data.accommodation_name);
     if (!data.accommodation_name) {
         console.error("Accommodation data is null or undefined.");
         document.getElementById("noAccommodationSection").style.display = "block";
@@ -315,8 +358,10 @@ function populateAccommodationDetails(data) {
     }
     try {
         document.getElementById("accommodationName").textContent = data.accommodation_name || "N/A";
+        // document.getElementById("pictures").textContent = data.pictures[0] || "N/A";
         document.getElementById("price").textContent = data.price || "N/A";
         document.getElementById("location").textContent = data.location || "N/A";
+        document.getElementById("address").textContent = data.address || "N/A";
         document.getElementById("landmark").textContent = data.landmark || "N/A"; // Landmark
         document.getElementById("description").textContent = data.description || "N/A";
         document.getElementById("totalRooms").textContent = data.total_rooms || "N/A";
@@ -339,8 +384,6 @@ function populateAccommodationDetails(data) {
         console.error("Error processing accommodation details:", error);
     }
 }
-
-
 
 
 // ----------------------------------------------------------------------
@@ -422,7 +465,7 @@ window.onclick = function (event) {
     //     try {
     //         document.getElementById("accommodationName").textContent = data.accommodation_name || "N/A";
     //         document.getElementById("price").textContent = data.price || "N/A";
-    //         document.getElementById("location").textContent = data.location || "N/A";
+    //         document.getElementById("address").textContent = data.address || "N/A";
     //         document.getElementById("description").textContent = data.description || "N/A";
     //         document.getElementById("totalRooms").textContent = data.total_rooms || "N/A";
     //         document.getElementById("genderPreference").textContent = data.gender_preference || "N/A";
@@ -456,7 +499,7 @@ window.onclick = function (event) {
     //     // Prepopulate form
     //     document.getElementById("accommodationNameInput").value = document.getElementById("accommodationName").textContent;
     //     document.getElementById("priceInput").value = document.getElementById("price").textContent;
-    //     document.getElementById("locationInput").value = document.getElementById("location").textContent;
+    //     document.getElementById("addressInput").value = document.getElementById("address").textContent;
     //     document.getElementById("descriptionInput").value = document.getElementById("description").textContent;
     //     document.getElementById("totalRoomsInput").value = document.getElementById("totalRooms").textContent;
     //     document.getElementById("genderPreferenceInput").value = document.getElementById("genderPreference").textContent;
@@ -510,7 +553,7 @@ window.onclick = function (event) {
     //     const data = {
     //         accommodation_name: document.getElementById("accommodationNameInput").value,
     //         price: document.getElementById("priceInput").value,
-    //         location: document.getElementById("locationInput").value,
+    //         address: document.getElementById("addressInput").value,
     //         description: document.getElementById("descriptionInput").value,
     //         total_rooms: document.getElementById("totalRoomsInput").value,
     //         gender_preference: document.getElementById("genderPreferenceInput").value,

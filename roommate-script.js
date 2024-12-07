@@ -126,8 +126,9 @@ function login() {
                 alert("Login successful!");
                 // Redirect to user.html with user_id as a query parameter
                 // window.location.href = `roommate.html?user_id=${data.user_id}`;
-                // requestDetails.style.display = 'block';
-                localStorage.setItem('user_id', data.user_id); // Store user_id in localStorage
+                requestDetails.style.display = 'block';
+                localStorage.setItem('user_id', data.user_id);
+                // displayRoommateRequests(); // Store user_id in localStorage
                 window.location.reload();
             } else {
                 alert(data.message || "Invalid email or password.");
@@ -176,9 +177,61 @@ function register() {
             console.error('Error during registration:', error);
         });
 }
+// Function to fetch and display roommate requests
+// async function displayRoommateRequests() {
+//     const userId = localStorage.getItem("user_id"); // Retrieve the logged-in user's ID
+
+//     if (!userId) {
+//         alert("Please log in to view your roommate requests.");
+//         return;
+//     }
+
+//     try {
+//         const response = await fetch(`http://localhost:3000/api/roommate-requests?user_id=${userId}`);
+//         const result = await response.json();
+
+//         if (result.success) {
+//             const requestsContainer = document.getElementById("requestsContainer");
+//             requestsContainer.innerHTML = ''; // Clear existing requests
+
+//             result.data.forEach(request => {
+//                 const requestCard = document.createElement("div");
+//                 requestCard.classList.add("roommate-card");
+
+//                 // Build the HTML for a single request
+//                 requestCard.innerHTML = `
+//                     <img src="${request.pictures || 'images/default_roommate.jpg'}" alt="${request.name}" />
+//                     <div>
+//                         <h3>${request.name}</h3>
+//                         <p><strong>Age:</strong> ${request.age}</p>
+//                         <p><strong>Gender:</strong> ${request.gender}</p>
+//                         <p><strong>Profession:</strong> ${request.profession}</p>
+//                         <p><strong>Room Sharing:</strong> ${request.room_sharing.split(",").join(", ")}</p>
+//                         <p><strong>Location:</strong> ${request.location}</p>
+//                         <p><strong>Description:</strong> ${request.description || "No description available"}</p>
+//                         <p><strong>Requirements:</strong> ${request.requirements || "No specific requirements"}</p>
+//                         <p><strong>Contact:</strong> ${request.contact}</p>
+//                         <p><strong>Email:</strong> ${request.email}</p>
+//                     </div>
+//                 `;
+
+//                 requestsContainer.appendChild(requestCard);
+//             });
+//         } else {
+//             alert("Failed to load roommate requests.");
+//         }
+//     } catch (error) {
+//         console.error("Error fetching roommate requests:", error);
+//         alert("An error occurred while loading roommate requests.");
+//     }
+// }
+
+// // Call the function after the user logs in
+// // window.onload = displayRoommateRequests;
+
 document.addEventListener('DOMContentLoaded', () => {
     const userId = localStorage.getItem('user_id');
-    const requestSection = document.getElementById('userRoommateRequest');
+    const requestSection = document.getElementById('roommateRequest');
     const requestDetails = document.getElementById('requestDetails');
     const editForm = document.getElementById('editRequestForm');
     const logoutButton = document.getElementById('logoutButton');
@@ -191,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Show the logout button if the user is logged in
-    logoutButton.style.display = 'block';
+    // logoutButton.style.display = 'block';
 
     // Fetch roommate request details for the logged-in user
     fetch(`http://localhost:3000/api/roommate_requests/${userId}`)
@@ -221,6 +274,21 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error fetching roommate request:', error));
 });
+
+function showEditForm() {
+    document.getElementById('requestDetails').style.display = 'none';
+    document.getElementById('editRequestForm').style.display = 'block';
+}
+function closeEditForm() {
+    document.getElementById('requestDetails').style.display = 'block';
+    document.getElementById('editRequestForm').style.display = 'none';
+}
+
+function logout() {
+    localStorage.removeItem('user_id');
+    alert('Logged out successfully!');
+    window.location.reload();
+}
 
 // Logout Functionality
 function logout() {
