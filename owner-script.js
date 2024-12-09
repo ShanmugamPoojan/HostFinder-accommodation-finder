@@ -147,6 +147,8 @@ function saveAccommodation(event) {
         .join(",");
 
     const data = {
+        accommodation_id: ownerId,
+        owner_id: ownerId,
         accommodation_name: document.getElementById("accommodationNameInput").value,
         price: document.getElementById("priceInput").value,
         location: document.getElementById("locationInput").value,

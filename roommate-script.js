@@ -280,6 +280,7 @@ function showEditForm() {
     document.getElementById('editRequestForm').style.display = 'block';
 }
 function closeEditForm() {
+    preventDefault();
     document.getElementById('requestDetails').style.display = 'block';
     document.getElementById('editRequestForm').style.display = 'none';
 }

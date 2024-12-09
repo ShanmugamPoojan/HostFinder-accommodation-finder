@@ -247,10 +247,10 @@ app.post('/api/accommodation-requests', (req, res) => {
     });
 });
 
-
 app.put('/api/accommodation/:id', (req, res) => {
-    const accommodationId = req.params.id;
     const {
+        accommodation_id, // Include accommodation_id for checking existence
+        owner_id,
         accommodation_name,
         price,
         location,
@@ -265,58 +265,84 @@ app.put('/api/accommodation/:id', (req, res) => {
         restrictions,
         facilities,
         pictures,
-        contact
+        contact,
     } = req.body;
 
-    // SQL query to update all accommodation details
+    // SQL query to insert or update accommodation details
     const query = `
-        UPDATE accommodation 
-        SET 
-            accommodation_name = ?, 
-            price = ?, 
-            location = ?, 
-            address = ?, 
-            landmark = ?, 
-            description = ?, 
-            total_rooms = ?, 
-            gender_preference = ?, 
-            food_type = ?, 
-            room_sharing = ?, 
-            bathroom = ?, 
-            restrictions = ?, 
-            facilities = ?, 
-            pictures = ?, 
-            contact = ?
-        WHERE accommodation_id = ?;
+        INSERT INTO accommodation (
+            accommodation_id,
+            owner_id,
+            accommodation_name,
+            price,
+            location,
+            address,
+            landmark,
+            description,
+            total_rooms,
+            gender_preference,
+            food_type,
+            room_sharing,
+            bathroom,
+            restrictions,
+            facilities,
+            pictures,
+            contact
+        ) VALUES (
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+        )
+        ON DUPLICATE KEY UPDATE
+            accommodation_name = VALUES(accommodation_name),
+            price = VALUES(price),
+            location = VALUES(location),
+            address = VALUES(address),
+            landmark = VALUES(landmark),
+            description = VALUES(description),
+            total_rooms = VALUES(total_rooms),
+            gender_preference = VALUES(gender_preference),
+            food_type = VALUES(food_type),
+            room_sharing = VALUES(room_sharing),
+            bathroom = VALUES(bathroom),
+            restrictions = VALUES(restrictions),
+            facilities = VALUES(facilities),
+            pictures = VALUES(pictures),
+            contact = VALUES(contact);
     `;
 
-    // Execute the query with the provided data
-    db.query(query, [
-        accommodation_name,
-        price,
-        location,
-        address,
-        landmark,
-        description,
-        total_rooms,
-        gender_preference,
-        food_type,
-        room_sharing,
-        bathroom,
-        restrictions,
-        JSON.stringify(facilities), // Assuming facilities is an array
-        JSON.stringify(pictures),   // Assuming pictures is an array
-        contact,
-        accommodationId
-    ], (err, results) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ success: false, message: 'Database error' });
-        }
+    db.query(
+        query,
+        [
+            accommodation_id || null, // Pass null if no ID is provided
+            owner_id,
+            accommodation_name,
+            price,
+            location,
+            address,
+            landmark,
+            description,
+            total_rooms,
+            gender_preference,
+            food_type,
+            room_sharing,
+            bathroom,
+            restrictions,
+            JSON.stringify(facilities), // Convert facilities array to JSON
+            JSON.stringify(pictures),   // Convert pictures array to JSON
+            contact,
+        ],
+        (err, results) => {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
 
-        // Send a success response
-        res.json({ success: true, message: 'Accommodation updated successfully' });
-    });
+            const message = accommodation_id
+                ? 'Accommodation updated successfully'
+                : 'Accommodation added successfully';
+
+            res.json({ success: true, message });
+        }
+    );
 });
 
 
