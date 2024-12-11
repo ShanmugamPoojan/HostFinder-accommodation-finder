@@ -66,11 +66,14 @@ section{
     width: 80%;
     margin: 20px auto;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
     gap: 15px;
 }
 
 .request-item {
+    width: 40%;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 15px;
@@ -206,4 +209,51 @@ section{
 
 .delete-button:hover {
     background-color: #C0392B; /* Darker Red */
+}
+
+#historyTableContainer h3{
+    text-align: center;
+}
+/* General table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+td:hover {
+    background-color: #f1f1f1;
+}
+
+/* Table header style */
+thead {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Responsive table for small screens */
+@media screen and (max-width: 600px) {
+    table {
+        width: 100%;
+    }
+
+    th, td {
+        font-size: 14px;
+        padding: 8px;
+    }
 }

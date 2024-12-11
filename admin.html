@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="admin-style.css">
 </head>
+
 <body>
     <header>
         <h1>Admin Dashboard</h1>
@@ -20,14 +22,17 @@
     <main>
         <section>
             <div class="admin-search">
-
                 <h1>Manage requests</h1>
             </div>
+            <!-- Container for Pending Requests -->
             <div id="requestsContainer" class="requests-container">
                 <!-- Requests will be dynamically populated here -->
             </div>
+            <div id="historyTableContainer">
+                
+            </div>
         </section>
-        
+
         <section id="accommodations-section">
             <section class="admin-search">
                 <h2>Manage Accommodations</h2>
@@ -67,4 +72,5 @@
 
     <script src="admin-script.js"></script>
 </body>
+
 </html>

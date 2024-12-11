@@ -88,32 +88,11 @@ CREATE TABLE accommodation_requests (
     restrictions TEXT NOT NULL,
     pictures JSON,
     contact VARCHAR(10),
+    status ENUM('approved', 'rejected', 'pending') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (owner_id) REFERENCES owner(owner_id) ON DELETE CASCADE
 );
 
-INSERT INTO accommodation_requests (
-    owner_id, 
-    accommodation_name, 
-    price, 
-    location, 
-    address, 
-    landmark, 
-    description, 
-    total_rooms, 
-    gender_preference, 
-    food_type, 
-    room_sharing, 
-    bathroom, 
-    restrictions, 
-    facilities, 
-    pictures, 
-    contact, 
-    created_at
-) VALUES
-(2, 'NestHostel', 7500.00, 'Pune', 'Lane 8, Koregaon Park', 'Near Osho Garden', 'Premium rooms for professionals', 10, 'girls', 'both', 'single,double', 'attach', 'No pets allowed', '["wifi", "laundry", "parking"]', '["images/pg_image3.jpg", "images/pg_image4.jpg"]', '9876512340', CURRENT_TIMESTAMP),
-(3, 'GreenNest Stay', 6200.00, 'Mumbai', '5th Lane, Andheri East', 'Near Marol Metro Station', 'Comfortable accommodation for working professionals', 12, 'boys', 'non-veg', 'double', 'common', 'No alcohol', '["wifi", "parking"]', '["images/pg_image5.jpg", "images/pg_image6.jpg"]', '9987654321', CURRENT_TIMESTAMP),
-(4, 'Comfort Inn', 5000.00, 'Hyderabad', '4th Avenue, Banjara Hills', 'Close to Jubilee Check Post', 'Affordable stay with modern amenities', 15, 'both', 'both', 'single,triple', 'attach,common', 'No loud music', '["wifi", "laundry", "security"]', '["images/pg_image7.jpg", "images/pg_image8.jpg"]', '9876547890', CURRENT_TIMESTAMP);
 
 INSERT INTO owner (email, password, created_at) VALUES
 ('owner1@example.com', '123', CURRENT_TIMESTAMP),
@@ -127,6 +106,27 @@ INSERT INTO owner (email, password, created_at) VALUES
 ('owner9@example.com', '123', CURRENT_TIMESTAMP),
 ('owner10@example.com', '123', CURRENT_TIMESTAMP);
 
+-- INSERT INTO accommodation_requests (
+--     owner_id, accommodation_name, price, location, address, landmark, description, 
+--     total_rooms, gender_preference, food_type, room_sharing, bathroom, restrictions, 
+--     facilities, pictures, contact, status
+-- ) VALUES
+-- (1, 'GreenView PG', 7500.00, 'Bengaluru', '123 MG Road', 'Near Metro Station', 'Affordable accommodation with great amenities', 
+--   10, 'boys', 'veg', 'double', 'attach', 'No pets allowed', '["wifi","laundry","parking"]', '["images/cover_image1.jpg","images/pg_image1.jpg","images/pg_image2.jpg","images/pg_image3.jpg"]', 
+--   '9876543210', 'pending'),
+-- (2, 'BlueSky Hostel', 6500.00, 'Pune', '45 JM Road', 'Opposite Mall', 'Comfortable hostel for working professionals', 
+--   15, 'girls', 'both', 'single,double', 'common', 'No smoking allowed', '["security","laundry"]', '["images/cover_image2.jpg","images/pg_image4.jpg","images/pg_image5.jpg","images/pg_image6.jpg"]', 
+--   '9123456789', 'pending'),
+-- (3, 'Sunrise Stay', 8000.00, 'Mumbai', '87 Marine Drive', 'Near Sea View', 'Premium accommodation with sea-facing rooms', 
+--   12, 'both', 'non-veg', 'single', 'attach,common', 'No loud music allowed', '["wifi","gym","laundry"]', '["images/cover_image3.jpg","images/pg_image7.jpg","images/pg_image8.jpg","images/pg_image9.jpg"]', 
+--   '9988776655', 'pending'),
+-- (4, 'HillTop PG', 7000.00, 'Chennai', '67 Mount Road', 'Close to Tech Park', 'Budget-friendly stay for IT professionals', 
+--   20, 'boys', 'veg', 'triple', 'attach', 'No alcohol allowed', '["wifi","kitchen","garden"]', '["images/cover_image4.jpg","images/pg_image10.jpg","images/pg_image11.jpg","images/pg_image12.jpg"]', 
+--   '9112233445', 'approved'),
+-- (5, 'CozyNest Hostel', 9000.00, 'Hyderabad', '12 Jubilee Hills', 'Near Shopping Complex', 'Luxury accommodation with all facilities', 
+--   18, 'girls', 'both', 'double', 'common', 'No pets allowed', '["wifi","security","laundry"]', '["images/cover_image5.jpg","images/pg_image13.jpg","images/pg_image14.jpg","images/pg_image15.jpg"]', 
+--   '9876678945', 'rejected');
+
 
 INSERT INTO accommodation (owner_id, accommodation_name, price, location, address, landmark, description, total_rooms, gender_preference, food_type, room_sharing, bathroom, facilities, restrictions, pictures, contact, created_at) VALUES
 (1, 'Sunshine PG', 7500.00, 'Bengaluru', '5th Cross Road, Koramangala', 'Near Forum Mall', 'Affordable stay for working professionals', 10, 'both', 'both', 'single,double', 'attach', '["wifi", "laundry", "parking"]', 'No pets allowed', '["images/cover_image1.jpg", "images/pg_image2.jpg", "images/pg_image3.jpg", "images/pg_image4.jpg"]', '9876543210', CURRENT_TIMESTAMP),
@@ -139,18 +139,6 @@ INSERT INTO accommodation (owner_id, accommodation_name, price, location, addres
 (8, 'GoldenHeaven Hostel', 9000.00, 'Chennai', '3rd Avenue, Anna Nagar', 'Close to Thirumangalam Metro Station', 'Luxury hostel with premium facilities', 20, 'girls', 'both', 'single', 'attach', '["wifi", "gym", "laundry", "security"]', 'No pets allowed', '["images/cover_image8.jpg", "images/pg_image12.jpg", "images/pg_image15.jpg", "images/pg_image17.jpg"]', '9845123678', CURRENT_TIMESTAMP),
 (9, 'Lakeview PG', 5500.00, 'Bengaluru', '5th Main Road, Hebbal', 'Near Manyata Tech Park', 'Comfortable rooms with scenic views', 12, 'both', 'veg', 'double,triple', 'attach,common', '["wifi", "laundry", "kitchen"]', 'No loud music', '["images/cover_image9.jpg", "images/pg_image11.jpg", "images/pg_image14.jpg", "images/pg_image18.jpg"]', '9876512340', CURRENT_TIMESTAMP),
 (10, 'TranquilStay', 7500.00, 'Hyderabad', 'Road No. 3, Banjara Hills', 'Next to City Center Mall', 'Peaceful accommodation for professionals', 18, 'both', 'non-veg', 'single,double', 'attach','["wifi", "laundry", "kitchen"]', 'No loud music', '["images/cover_image10.jpg", "images/pg_image10.jpg", "images/pg_image12.jpg", "images/pg_image13.jpg"]', '9123567890', CURRENT_TIMESTAMP);
-
-INSERT INTO location (accommodation_id, location, latitude, longitude) VALUES
-(1, 'Bengaluru', 12.935192, 77.624481),
-(2, 'Pune', 18.567916, 73.914315),
-(3, 'Mumbai', 19.120565, 72.904960),
-(4, 'Kolkata', 22.586786, 88.417907),
-(5, 'Hyderabad', 17.446739, 78.357039),
-(6, 'Bengaluru', 12.971598, 77.641437),
-(7, 'Noida', 28.630389, 77.368574),
-(8, 'Chennai', 13.084622, 80.217817),
-(9, 'Bengaluru', 13.035772, 77.597083),
-(10, 'Hyderabad', 17.412348, 78.429386);
 
 INSERT INTO location (accommodation_id, location, latitude, longitude) VALUES
 (1, 'Bengaluru', 12.935192, 77.624481),
@@ -179,6 +167,7 @@ INSERT INTO roommate_requests (user_id, name, age, gender, profession, room_shar
 (5, 'Vikram Singh', 26, 'male', 'Financial Consultant', 'triple', 'Hitech City, Hyderabad', 'Searching for a like-minded individual', 'No loud music', '9123456789', 'vikram.s@example.com', 'images/roommate_girl3.jpg', CURRENT_TIMESTAMP);
 
 SELECT * FROM accommodation;
+select * from accommodation_requests;
 select * from roommate_requests;
 select * from user;
 select * from owner; 

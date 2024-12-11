@@ -1,7 +1,10 @@
 // Fetch and display pending requests
 async function fetchRequests() {
     const requestsContainer = document.getElementById("requestsContainer");
+    const historyTableContainer = document.getElementById("historyTableContainer");
+    
     requestsContainer.innerHTML = "<p>Loading...</p>"; // Show a loading message
+    historyTableContainer.innerHTML = ""; // Clear the history table initially
 
     try {
         const response = await fetch('http://localhost:3000/api/admin/accommodation-requests');
@@ -12,78 +15,142 @@ async function fetchRequests() {
             return;
         }
 
-        requestsContainer.innerHTML = ''; // Clear the loading message
+        // Filter the requests based on status (pending)
+        const pendingRequests = requests.filter(request => request.status === 'pending');
+        const acceptedRejectedRequests = requests.filter(request => request.status !== 'pending');
 
-        requests.forEach(request => {
-            const requestDiv = document.createElement('div');
-            requestDiv.classList.add('request-item');
-            requestDiv.innerHTML = `
-                <h3>${request.accommodation_name}</h3>
-                <p><strong>Price:</strong> ₹${request.price}</p>
-                <p><strong>Location:</strong> ${request.location}</p>
-                <p><strong>Address:</strong> ${request.address}</p>
-                <p><strong>Contact:</strong> ${request.contact}</p>
-                <p><strong>Description:</strong> ${request.description}</p>
-                <div class="request-actions">
-                    <button class="approve" onclick="approveRequest(${request.request_id})">Approve</button>
-                    <button class="reject" onclick="rejectRequest(${request.request_id})">Reject</button>
-                </div>
+        // Display pending requests
+        if (pendingRequests.length > 0) {
+            requestsContainer.innerHTML = ''; // Clear loading message
+            pendingRequests.forEach(request => {
+                const requestDiv = document.createElement('div');
+                requestDiv.classList.add('request-item');
+                requestDiv.id = `request-${request.request_id}`; // Add unique id for each request div
+
+                requestDiv.innerHTML = `
+                    <h3>${request.accommodation_name}</h3>
+                    <p><strong>Price:</strong> ₹${request.price}</p>
+                    <p><strong>Location:</strong> ${request.location}</p>
+                    <p><strong>Address:</strong> ${request.address}</p>
+                    <p><strong>Contact:</strong> ${request.contact}</p>
+                    <p><strong>Description:</strong> ${request.description}</p>
+                    <div class="request-actions">
+                        <button class="approve" onclick="approveRequest(${request.request_id})">Approve</button>
+                        <button class="reject" onclick="rejectRequest(${request.request_id})">Reject</button>
+                    </div>
+                `;
+                requestsContainer.appendChild(requestDiv);
+            });
+        } else {
+            requestsContainer.innerHTML = "<p>No pending requests</p>";
+        }
+
+        // Display accepted and rejected requests in the history table
+        if (acceptedRejectedRequests.length > 0) {
+            let historyTableHTML = `
+                <h3>Request History</h3>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Accommodation Name</th>
+                            <th>Price</th>
+                            <th>Location</th>
+                            <th>Address</th>
+                            <th>Contact</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
             `;
 
-            requestsContainer.appendChild(requestDiv);
-        });
+            acceptedRejectedRequests.forEach(request => {
+                historyTableHTML += `
+                    <tr>
+                        <td>${request.accommodation_name}</td>
+                        <td>₹${request.price}</td>
+                        <td>${request.location}</td>
+                        <td>${request.address}</td>
+                        <td>${request.contact}</td>
+                        <td>${request.status}</td>
+                    </tr>
+                `;
+            });
+
+            historyTableHTML += `</tbody></table>`;
+            historyTableContainer.innerHTML = historyTableHTML; // Display the table
+        } else {
+            historyTableContainer.innerHTML = "<p>No accepted or rejected requests</p>";
+        }
     } catch (error) {
         console.error("Error fetching requests:", error);
         requestsContainer.innerHTML = "<p>Failed to load requests.</p>";
     }
 }
+// Load requests on page load
+window.onload = fetchRequests;
 
-// Approve a request
+// Function to approve an accommodation request
 async function approveRequest(requestId) {
     if (!confirm("Are you sure you want to approve this request?")) return;
 
     try {
+        // Call API to approve the request and move data to accommodation table
         const response = await fetch('http://localhost:3000/api/admin/approve-accommodation', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ request_id: requestId }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ request_id: requestId })
         });
 
         const result = await response.json();
+        
         if (result.success) {
             alert("Request approved successfully!");
-            fetchRequests(); // Refresh the list
+
+            // Remove the approved request from the page
+            const requestElement = document.getElementById(`request-${requestId}`);
+            if (requestElement) {
+                requestElement.remove(); // Remove the request from the UI
+            }
+            fetchRequests(); // Refresh the list of requests
         } else {
             alert("Failed to approve request.");
         }
+
     } catch (error) {
         console.error("Error approving request:", error);
+        alert("Error occurred while approving the request.");
     }
 }
 
-// Reject a request
+
+// Function to reject an accommodation request
 async function rejectRequest(requestId) {
     if (!confirm("Are you sure you want to reject this request?")) return;
 
     try {
+        // Call API to update the status of the request to rejected
         const response = await fetch(`http://localhost:3000/api/admin/reject-accommodation/${requestId}`, {
             method: 'DELETE',
         });
 
         const result = await response.json();
+
         if (result.success) {
             alert("Request rejected successfully!");
-            fetchRequests(); // Refresh the list
+
+            // Refresh the list of requests after rejection
+            fetchRequests();
         } else {
             alert("Failed to reject request.");
         }
+
     } catch (error) {
         console.error("Error rejecting request:", error);
+        alert("Error occurred while rejecting the request.");
     }
 }
-
-// Load requests on page load
-window.onload = fetchRequests;
 
 
 function openSearch() {
@@ -213,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const pictures = Array.isArray(accommodation.pictures)
                     ? accommodation.pictures
                     : JSON.parse(accommodation.pictures || '[]');
-                
+
 
                 card.innerHTML = `
                     <img src="${pictures[0] || 'images/default.jpg'}" alt="${accommodation.accommodation_name}"><br>

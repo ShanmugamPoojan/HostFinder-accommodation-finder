@@ -191,62 +191,6 @@ app.get('/api/accommodation/:owner_id', (req, res) => {
 
 // ---------------------------owner page request edit accommodation details------------------------------------
 
-// Route to add accommodation request
-app.post('/api/accommodation-requests', (req, res) => {
-    const {
-        owner_id,
-        accommodation_name,
-        price,
-        location,
-        address,
-        landmark,
-        description,
-        total_rooms,
-        gender_preference,
-        food_type,
-        room_sharing,
-        bathroom,
-        restrictions,
-        facilities,
-        pictures,
-        contact
-    } = req.body;
-
-    const query = `
-        INSERT INTO accommodation_requests (
-            owner_id, accommodation_name, price, location, address, landmark, description, 
-            total_rooms, gender_preference, food_type, room_sharing, bathroom, restrictions, 
-            facilities, pictures, contact
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-    `;
-
-    db.query(query, [
-        owner_id,
-        accommodation_name,
-        price,
-        location,
-        address,
-        landmark,
-        description,
-        total_rooms,
-        gender_preference,
-        food_type,
-        room_sharing,
-        bathroom,
-        restrictions,
-        JSON.stringify(facilities), // Assuming facilities is an array
-        JSON.stringify(pictures),   // Assuming pictures is an array
-        contact
-    ], (err, results) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ success: false, message: 'Database error' });
-        }
-
-        res.json({ success: true, message: 'Accommodation request submitted successfully' });
-    });
-});
-
 app.put('/api/accommodation/:id', (req, res) => {
     const {
         accommodation_id, // Include accommodation_id for checking existence
@@ -268,82 +212,268 @@ app.put('/api/accommodation/:id', (req, res) => {
         contact,
     } = req.body;
 
-    // SQL query to insert or update accommodation details
-    const query = `
-        INSERT INTO accommodation (
-            accommodation_id,
-            owner_id,
-            accommodation_name,
-            price,
-            location,
-            address,
-            landmark,
-            description,
-            total_rooms,
-            gender_preference,
-            food_type,
-            room_sharing,
-            bathroom,
-            restrictions,
-            facilities,
-            pictures,
-            contact
-        ) VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-        )
-        ON DUPLICATE KEY UPDATE
-            accommodation_name = VALUES(accommodation_name),
-            price = VALUES(price),
-            location = VALUES(location),
-            address = VALUES(address),
-            landmark = VALUES(landmark),
-            description = VALUES(description),
-            total_rooms = VALUES(total_rooms),
-            gender_preference = VALUES(gender_preference),
-            food_type = VALUES(food_type),
-            room_sharing = VALUES(room_sharing),
-            bathroom = VALUES(bathroom),
-            restrictions = VALUES(restrictions),
-            facilities = VALUES(facilities),
-            pictures = VALUES(pictures),
-            contact = VALUES(contact);
-    `;
+    // Check if the accommodation exists
+    const checkQuery = `SELECT accommodation_id FROM accommodation WHERE accommodation_id = ?`;
 
-    db.query(
-        query,
-        [
-            accommodation_id || null, // Pass null if no ID is provided
-            owner_id,
-            accommodation_name,
-            price,
-            location,
-            address,
-            landmark,
-            description,
-            total_rooms,
-            gender_preference,
-            food_type,
-            room_sharing,
-            bathroom,
-            restrictions,
-            JSON.stringify(facilities), // Convert facilities array to JSON
-            JSON.stringify(pictures),   // Convert pictures array to JSON
-            contact,
-        ],
-        (err, results) => {
-            if (err) {
-                console.error('Database error:', err);
-                return res.status(500).json({ success: false, message: 'Database error' });
-            }
-
-            const message = accommodation_id
-                ? 'Accommodation updated successfully'
-                : 'Accommodation added successfully';
-
-            res.json({ success: true, message });
+    db.query(checkQuery, [accommodation_id], (checkErr, checkResults) => {
+        if (checkErr) {
+            console.error('Database error:', checkErr);
+            return res.status(500).json({ success: false, message: 'Database error' });
         }
-    );
+
+        if (checkResults.length > 0) {
+            // Accommodation exists; update it
+            const updateQuery = `
+                UPDATE accommodation 
+                SET 
+                    accommodation_name = ?, 
+                    price = ?, 
+                    location = ?, 
+                    address = ?, 
+                    landmark = ?, 
+                    description = ?, 
+                    total_rooms = ?, 
+                    gender_preference = ?, 
+                    food_type = ?, 
+                    room_sharing = ?, 
+                    bathroom = ?, 
+                    restrictions = ?, 
+                    facilities = ?, 
+                    pictures = ?, 
+                    contact = ?
+                WHERE accommodation_id = ?;
+            `;
+
+            db.query(
+                updateQuery,
+                [
+                    accommodation_name,
+                    price,
+                    location,
+                    address,
+                    landmark,
+                    description,
+                    total_rooms,
+                    gender_preference,
+                    food_type,
+                    room_sharing,
+                    bathroom,
+                    restrictions,
+                    JSON.stringify(facilities), // Convert facilities array to JSON
+                    JSON.stringify(pictures),   // Convert pictures array to JSON
+                    contact,
+                    accommodation_id,
+                ],
+                (updateErr, updateResults) => {
+                    if (updateErr) {
+                        console.error('Database error:', updateErr);
+                        return res.status(500).json({ success: false, message: 'Database error' });
+                    }
+
+                    res.json({ success: true, message: 'Accommodation updated successfully' });
+                }
+            );
+        } else {
+            // Accommodation doesn't exist; add a new request to accommodation_requests
+            const insertQuery = `
+    INSERT INTO accommodation_requests (
+        owner_id, accommodation_name, price, location, address, landmark, description, 
+        total_rooms, gender_preference, food_type, room_sharing, bathroom, restrictions, 
+        facilities, pictures, contact, status
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+`;
+
+            db.query(
+                insertQuery,
+                [
+                    owner_id,
+                    accommodation_name,
+                    price,
+                    location,
+                    address,
+                    landmark,
+                    description,
+                    total_rooms,
+                    gender_preference,
+                    food_type,
+                    room_sharing,
+                    bathroom,
+                    restrictions,
+                    JSON.stringify(facilities), // Ensure facilities is a valid JSON string
+                    JSON.stringify(pictures),   // Ensure pictures is a valid JSON string
+                    contact,
+                    'pending' // Default status for new requests
+                ],
+                (insertErr, insertResults) => {
+                    if (insertErr) {
+                        console.error('Database error while inserting accommodation request:', insertErr);
+                        return res.status(500).json({ success: false, message: 'Database error' });
+                    }
+
+                    res.json({ success: true, message: 'Accommodation request submitted successfully' });
+                }
+            );
+
+
+        }
+    });
 });
+
+
+
+// Route to add accommodation request
+// app.post('/api/accommodation-requests', (req, res) => {
+//     const {
+//         owner_id,
+//         accommodation_name,
+//         price,
+//         location,
+//         address,
+//         landmark,
+//         description,
+//         total_rooms,
+//         gender_preference,
+//         food_type,
+//         room_sharing,
+//         bathroom,
+//         restrictions,
+//         facilities,
+//         pictures,
+//         contact
+//     } = req.body;
+
+//     const query = `
+//         INSERT INTO accommodation_requests (
+//             owner_id, accommodation_name, price, location, address, landmark, description, 
+//             total_rooms, gender_preference, food_type, room_sharing, bathroom, restrictions, 
+//             facilities, pictures, contact
+//         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+//     `;
+
+//     db.query(query, [
+//         owner_id,
+//         accommodation_name,
+//         price,
+//         location,
+//         address,
+//         landmark,
+//         description,
+//         total_rooms,
+//         gender_preference,
+//         food_type,
+//         room_sharing,
+//         bathroom,
+//         restrictions,
+//         JSON.stringify(facilities), // Assuming facilities is an array
+//         JSON.stringify(pictures),   // Assuming pictures is an array
+//         contact
+//     ], (err, results) => {
+//         if (err) {
+//             console.error('Database error:', err);
+//             return res.status(500).json({ success: false, message: 'Database error' });
+//         }
+
+//         res.json({ success: true, message: 'Accommodation request submitted successfully' });
+//     });
+// });
+
+// app.put('/api/accommodation/:id', (req, res) => {
+//     const {
+//         accommodation_id, // Include accommodation_id for checking existence
+//         owner_id,
+//         accommodation_name,
+//         price,
+//         location,
+//         address,
+//         landmark,
+//         description,
+//         total_rooms,
+//         gender_preference,
+//         food_type,
+//         room_sharing,
+//         bathroom,
+//         restrictions,
+//         facilities,
+//         pictures,
+//         contact,
+//     } = req.body;
+
+//     // SQL query to insert or update accommodation details
+//     const query = `
+//         INSERT INTO accommodation (
+//             accommodation_id,
+//             owner_id,
+//             accommodation_name,
+//             price,
+//             location,
+//             address,
+//             landmark,
+//             description,
+//             total_rooms,
+//             gender_preference,
+//             food_type,
+//             room_sharing,
+//             bathroom,
+//             restrictions,
+//             facilities,
+//             pictures,
+//             contact
+//         ) VALUES (
+//             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+//         )
+//         ON DUPLICATE KEY UPDATE
+//             accommodation_name = VALUES(accommodation_name),
+//             price = VALUES(price),
+//             location = VALUES(location),
+//             address = VALUES(address),
+//             landmark = VALUES(landmark),
+//             description = VALUES(description),
+//             total_rooms = VALUES(total_rooms),
+//             gender_preference = VALUES(gender_preference),
+//             food_type = VALUES(food_type),
+//             room_sharing = VALUES(room_sharing),
+//             bathroom = VALUES(bathroom),
+//             restrictions = VALUES(restrictions),
+//             facilities = VALUES(facilities),
+//             pictures = VALUES(pictures),
+//             contact = VALUES(contact);
+//     `;
+
+//     db.query(
+//         query,
+//         [
+//             accommodation_id || null, // Pass null if no ID is provided
+//             owner_id,
+//             accommodation_name,
+//             price,
+//             location,
+//             address,
+//             landmark,
+//             description,
+//             total_rooms,
+//             gender_preference,
+//             food_type,
+//             room_sharing,
+//             bathroom,
+//             restrictions,
+//             JSON.stringify(facilities), // Convert facilities array to JSON
+//             JSON.stringify(pictures),   // Convert pictures array to JSON
+//             contact,
+//         ],
+//         (err, results) => {
+//             if (err) {
+//                 console.error('Database error:', err);
+//                 return res.status(500).json({ success: false, message: 'Database error' });
+//             }
+
+//             const message = accommodation_id
+//                 ? 'Accommodation updated successfully'
+//                 : 'Accommodation added successfully';
+
+//             res.json({ success: true, message });
+//         }
+//     );
+// });
 
 
 
@@ -442,7 +572,7 @@ app.get('/api/roommate_requests/:user_id', (req, res) => {
 
 app.post('/api/roommate_requests/:user_id', (req, res) => {
     const userId = req.params.user_id;
-    const { name, age, gender, profession, room_sharing,location, address, description, requirements, contact, email, pictures } = req.body;
+    const { name, age, gender, profession, room_sharing, location, address, description, requirements, contact, email, pictures } = req.body;
 
     const checkQuery = `SELECT * FROM roommate_requests WHERE user_id = ?`;
     db.query(checkQuery, [userId], (err, results) => {
@@ -511,22 +641,96 @@ app.get('/api/admin/accommodation-requests', (req, res) => {
     });
 });
 
-// Reject an accommodation request
-app.delete('/api/admin/reject-accommodation/:id', (req, res) => {
-    const requestId = req.params.id;
+app.post('/api/admin/approve-accommodation', (req, res) => {
+    const { request_id } = req.body;
 
-    const query = `DELETE FROM accommodation_requests WHERE request_id = ?`;
-    db.query(query, [requestId], (err, results) => {
+    // Fetch request details from the accommodation_requests table
+    const getRequestQuery = `SELECT * FROM accommodation_requests WHERE request_id = ?`;
+
+    db.query(getRequestQuery, [request_id], (err, results) => {
         if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ success: false, message: 'Database error' });
+            console.error("Error fetching request:", err);
+            return res.status(500).json({ success: false, message: "Error fetching request details" });
         }
 
-        if (results.affectedRows === 0) {
-            return res.status(404).json({ success: false, message: 'Request not found' });
+        if (results.length === 0) {
+            return res.status(404).json({ success: false, message: "Request not found" });
         }
 
-        res.json({ success: true, message: 'Request rejected successfully' });
+        const request = results[0];
+
+        // Validate and convert facilities and pictures fields to valid JSON
+        const facilities = Array.isArray(request.facilities)
+            ? request.facilities
+            : request.facilities.split(',').map(item => item.trim());
+
+        const pictures = Array.isArray(request.pictures)
+            ? request.pictures
+            : request.pictures.split(',').map(item => item.trim());
+
+        // Insert the request details into the accommodation table
+        const insertAccommodationQuery = `
+            INSERT INTO accommodation (
+                owner_id, accommodation_name, price, location, address, landmark, description, 
+                total_rooms, gender_preference, food_type, room_sharing, bathroom, restrictions, 
+                facilities, pictures, contact
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+
+        const accommodationData = [
+            request.owner_id,
+            request.accommodation_name,
+            request.price,
+            request.location,
+            request.address,
+            request.landmark,
+            request.description,
+            request.total_rooms,
+            request.gender_preference,
+            request.food_type,
+            request.room_sharing,
+            request.bathroom,
+            request.restrictions,
+            JSON.stringify(facilities), // Convert to JSON
+            JSON.stringify(pictures),   // Convert to JSON
+            request.contact
+        ];
+
+        db.query(insertAccommodationQuery, accommodationData, (err, insertResults) => {
+            if (err) {
+                console.error("Error inserting accommodation:", err);
+                return res.status(500).json({ success: false, message: "Error inserting accommodation" });
+            }
+
+            // Update the status of the request in accommodation_requests
+            const updateStatusQuery = `UPDATE accommodation_requests SET status = 'approved' WHERE request_id = ?`;
+
+            db.query(updateStatusQuery, [request_id], (err, updateResults) => {
+                if (err) {
+                    console.error("Error updating status:", err);
+                    return res.status(500).json({ success: false, message: "Error updating request status" });
+                }
+
+                res.json({ success: true, message: "Request approved and accommodation added successfully" });
+            });
+        });
+    });
+});
+
+
+app.delete('/api/admin/reject-accommodation/:request_id', (req, res) => {
+    const requestId = req.params.request_id;
+
+    // Update the status of the request to "rejected"
+    const updateStatusQuery = `UPDATE accommodation_requests SET status = 'rejected' WHERE request_id = ?`;
+
+    db.query(updateStatusQuery, [requestId], (err, results) => {
+        if (err) {
+            console.error("Error updating status:", err);
+            return res.status(500).json({ success: false, message: "Error rejecting request" });
+        }
+
+        res.json({ success: true, message: "Request rejected successfully" });
     });
 });
 
