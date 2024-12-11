@@ -1,8 +1,82 @@
+
+// Check if admin is already logged in on page load
+document.addEventListener("DOMContentLoaded", () => {
+    const username = new URLSearchParams(window.location.search).get("admin");
+
+    if (!username) {
+        document.getElementById("loginModal").style.display = "block"; // Show the login modal
+    } else {
+        document.getElementById("loginModal").style.display = "none";
+        fetchRequests();
+        loadAccommodationAndRoommateData();
+    }
+});
+
+// Function to handle admin login
+// Function to handle admin login
+async function login() {
+    const username = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    if (!username || !password) {
+        alert("Please enter both Admin ID and Password.");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:3000/api/admin/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert("Login successful!");
+
+            // Add admin username to the URL
+            const currentUrl = new URL(window.location);
+            currentUrl.searchParams.set("admin", username); // Add the "admin" query parameter
+            window.history.pushState({}, "", currentUrl.toString()); // Update the URL without reloading the page
+
+            // Hide the login modal
+            document.getElementById("loginModal").style.display = "none";
+            location.reload();
+
+        } else {
+            alert(result.message || "Invalid Admin ID or Password.");
+        }
+    } catch (error) {
+        console.error("Error during login:", error);
+        alert("An error occurred during login. Please try again.");
+    }
+}
+
+// Function to handle admin logout
+function logout() {
+    if (confirm("Are you sure you want to log out?")) {
+        // Remove login details from localStorage
+        localStorage.removeItem("adminLoggedIn");
+        localStorage.removeItem("adminUsername");
+
+        // Remove admin username from the URL
+        const currentUrl = new URL(window.location);
+        currentUrl.searchParams.delete("admin"); // Remove the "admin" query parameter
+        window.history.pushState({}, "", currentUrl.toString()); // Update the URL without reloading the page
+
+        // alert("You have been logged out.");
+        location.reload(); // Refresh the page to show the login modal
+    }
+}
+
+
 // Fetch and display pending requests
+
 async function fetchRequests() {
     const requestsContainer = document.getElementById("requestsContainer");
     const historyTableContainer = document.getElementById("historyTableContainer");
-    
+
     requestsContainer.innerHTML = "<p>Loading...</p>"; // Show a loading message
     historyTableContainer.innerHTML = ""; // Clear the history table initially
 
@@ -56,6 +130,7 @@ async function fetchRequests() {
                             <th>Price</th>
                             <th>Location</th>
                             <th>Address</th>
+                            <th>Rooms</th>
                             <th>Contact</th>
                             <th>Status</th>
                         </tr>
@@ -70,6 +145,7 @@ async function fetchRequests() {
                         <td>₹${request.price}</td>
                         <td>${request.location}</td>
                         <td>${request.address}</td>
+                        <td>${request.total_rooms}</td>
                         <td>${request.contact}</td>
                         <td>${request.status}</td>
                     </tr>
@@ -86,8 +162,7 @@ async function fetchRequests() {
         requestsContainer.innerHTML = "<p>Failed to load requests.</p>";
     }
 }
-// Load requests on page load
-window.onload = fetchRequests;
+
 
 // Function to approve an accommodation request
 async function approveRequest(requestId) {
@@ -104,7 +179,7 @@ async function approveRequest(requestId) {
         });
 
         const result = await response.json();
-        
+
         if (result.success) {
             alert("Request approved successfully!");
 
@@ -264,7 +339,7 @@ function searchUser(event) {
         });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function loadAccommodationAndRoommateData() {
     const accommodationsContainer = document.getElementById('accommodations-container');
     const roommatesContainer = document.getElementById('roommates-container');
 
@@ -280,7 +355,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const pictures = Array.isArray(accommodation.pictures)
                     ? accommodation.pictures
                     : JSON.parse(accommodation.pictures || '[]');
-
 
                 card.innerHTML = `
                     <img src="${pictures[0] || 'images/default.jpg'}" alt="${accommodation.accommodation_name}"><br>
@@ -328,7 +402,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         })
         .catch(error => console.error('Error fetching roommate requests:', error));
-});
+}
+
 
 // Delete accommodation
 function deleteAccommodation(id) {

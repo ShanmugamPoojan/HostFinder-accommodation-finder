@@ -1,12 +1,13 @@
 /* General Styles */
 :root{
     --primary: #2C3E50;
-    --hover: #676767;
+    --hover: #3b536b;
     --text: #555;
 }
 
 *{
     scroll-behavior: smooth;
+    box-sizing: border-box;
 }
 body {
     font-family: 'Arial', sans-serif;
@@ -56,6 +57,74 @@ h1, h2 {
 .navbar a:hover {
     background-color: var(--hover);
     border-radius: 5px;
+}
+
+/* Modal for Login/Register  */
+.modal {
+    /* display: none; */
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    /* width: 80vw; */
+    max-width: 800px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    display: flex;
+    gap: 20px;
+}
+
+.login-modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 500px;
+    border-radius: 10px;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.login-modal-content h2 {
+    margin-bottom: 10px;
+}
+
+.login-modal-content p {
+    margin: 10px 0;
+}
+
+.login-modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.login-modal-content button {
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-modal-content button:hover {
+    background-color: #aaa;
+
 }
 
 section{

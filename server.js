@@ -191,6 +191,36 @@ app.get('/api/accommodation/:owner_id', (req, res) => {
 
 // ---------------------------owner page request edit accommodation details------------------------------------
 
+// Admin login route
+app.post('/api/admin/login', (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ success: false, message: 'Username and password are required' });
+    }
+
+    const query = 'SELECT * FROM admin WHERE username = ?';
+
+    db.query(query, [username], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+
+        const admin = results[0];
+
+        if (admin.password === password) {
+            return res.json({ success: true, message: 'Login successful', adminId: admin.admin_id });
+        } else {
+            return res.status(401).json({ success: false, message: 'Invalid password' });
+        }
+    });
+});
+
 app.put('/api/accommodation/:id', (req, res) => {
     const {
         accommodation_id, // Include accommodation_id for checking existence
