@@ -340,10 +340,9 @@ app.put('/api/accommodation/:id', (req, res) => {
                         return res.status(500).json({ success: false, message: 'Database error' });
                     }
 
-                    res.json({ success: true, message: 'Accommodation request submitted successfully' });
+                    res.json({ success: true, message: 'Accommodation request submitted successfully. Wait for admin approval' });
                 }
             );
-
 
         }
     });

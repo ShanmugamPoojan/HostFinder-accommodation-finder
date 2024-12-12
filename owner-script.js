@@ -187,7 +187,8 @@ function saveAccommodation(event) {
         })
         .then(result => {
             if (result.success) {
-                alert("Accommodation saved successfully!");
+                alert(result.message);
+                // alert("Accommodation saved successfully!");
                 location.reload();
             } else {
                 alert(result.message || "Failed to save accommodation.");
