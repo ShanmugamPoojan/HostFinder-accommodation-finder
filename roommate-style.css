@@ -116,6 +116,60 @@ a{
 }
 
 
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    /* width: 80vw; */
+    max-width: 800px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    margin: 10px;
+    display: flex;
+    /* flex-direction: row; */
+    gap: 20px;
+}
+
+/* Details Section */
+.details-section {
+    text-align: left;
+    width: 50%;
+    /* width: 500px; */
+}
+
+.details-section h2 {
+    margin-bottom: 10px;
+    color: #2C3E50; /* Dark Blue */
+    text-align: center;
+}
+
+.details-section p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+.details-section p strong {
+    color: #555; /* Dark Gray */
+}
+
+
 #roommateRequest {
     max-width: 600px;
     margin: 0 auto;
@@ -219,37 +273,6 @@ form button {
     transform: scale(1.05);
 }
 
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 20;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-}
-
-.modal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 20px;
-    /* width: 80vw; */
-    max-width: 800px;
-    border-radius: 10px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-body {
-    margin: 10px;
-    display: flex;
-    /* flex-direction: row; */
-    gap: 20px;
-}
-
 /* Image Section */
 .image-section {
     display: flex;
@@ -266,65 +289,8 @@ form button {
     object-fit: cover;
 }
 
-/* Details Section */
-.details-section {
-    text-align: left;
-    width: 50%;
-    /* width: 500px; */
-}
-
-.details-section h2 {
-    margin-bottom: 10px;
-    color: #2C3E50; /* Dark Blue */
-    text-align: center;
-}
-
-.details-section p {
-    margin: 10px 0;
-    font-size: 1rem;
-}
-
-.details-section p strong {
-    color: #555; /* Dark Gray */
-}
-
-
-.login-modal-content {
-    background-color: #fff;
-    margin:10% auto;
-    padding: 20px;
-    width: 500px;
-    border-radius: 10px;
-    text-align: center;
-} 
-
-.login-modal-content h2 {
-    margin-bottom: 10px;
-}
-.login-modal-content p {
-    margin: 10px 0;
-}
-.login-modal-content input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-.login-modal-content button {
-    width: 100%;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.login-modal-content button:hover {
-    background-color: #aaa;
-   
-}
-
 /* Roommate Request Section */
-#userRoommateRequest {
+#roommateRequest {
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;

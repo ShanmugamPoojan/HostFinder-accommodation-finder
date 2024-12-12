@@ -1,0 +1,301 @@
+:root{
+    --primary: #60aaff;
+    --secondary: #60aaff7f;
+    --hover: #0000002c;
+    --text: #555;
+}
+* {
+    box-sizing: border-box;
+    font-family: "SUSE", sans-serif;
+    
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "SUSE", sans-serif;
+    /* background-color: #f9f9f9; */
+    background: linear-gradient(to top, #dfe9f3 0%, white 100%);
+}
+#bg{
+    min-height: 70vh;
+    
+}
+a{
+    text-decoration: none;
+    text-transform: none;
+}
+
+#logobar{
+    margin: auto;
+    padding: 10px 20px;
+    width: 60vw;
+    border-radius: 0 0 100px 100px;
+    color: #fff;
+    background-color: var(--primary);
+    font-weight: bolder;
+    font-size: 50px;
+    text-align: center;
+}
+#logobar > a{
+    color: #fff;
+}
+.navbar {
+    margin:  5px auto;
+    padding: 20px;
+    border-radius: 20px;
+    width: 50vw;
+    background-color: var(--primary);
+
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 10px;
+    left: 0;
+    z-index: 10;
+}
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    font-size: large;
+}
+.navbar a:hover {
+    background-color: var(--hover);
+    border-radius: 5px;
+}
+
+.button {
+    padding: 8px 16px;
+    color: #fff;
+    background-color: var(--primary);
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: large;
+    /* font-weight: bold; */
+    cursor: pointer;
+
+}
+.button:hover {
+    background-color: var(--hover);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    /* width: 80vw; */
+    max-width: 800px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    margin: 10px;
+    display: flex;
+    /* flex-direction: row; */
+    gap: 20px;
+}
+
+/* Details Section */
+.details-section {
+    text-align: left;
+    width: 50%;
+    /* width: 500px; */
+}
+
+.details-section h2 {
+    margin-bottom: 10px;
+    color: #2C3E50; /* Dark Blue */
+    text-align: center;
+}
+
+.details-section p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+.details-section p strong {
+    color: #555; /* Dark Gray */
+}
+
+
+.login-modal-content {
+    background-color: #fff;
+    margin:10% auto;
+    padding: 20px;
+    width: 500px;
+    border-radius: 10px;
+    text-align: center;
+} 
+
+.login-modal-content h2 {
+    margin-bottom: 10px;
+}
+.login-modal-content p {
+    margin: 10px 0;
+}
+.login-modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.login-modal-content button {
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.login-modal-content button:hover {
+    background-color: #aaa;
+   
+}
+
+/* Roommate Request Section */
+.section {
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+}
+
+#noUser{
+    text-align: center;
+}
+h2 {
+    text-align: center;
+    color: var(--primary);
+}
+
+#requestDetails{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* gap: 10px; */
+}
+#requestDetails > div{
+    padding: 0 10px;
+    width: 50%;
+}
+#requestDetails p{
+    margin: 10px 0;
+}
+
+#picture{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+#profilePicture {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+#editRequestForm{
+    padding: 0 40px;
+}
+form {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input, select, textarea, #editRoomSharing {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+}
+
+#editRoomSharing input[type="checkbox"] {
+    margin-right: 5px;
+    transform: scale(1.2);
+    cursor: pointer;
+    width: 20px;
+}
+
+#editRoomSharing >input[type="checkbox"]+label {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+#editRoomSharing input[type="checkbox"]+label:hover {
+    color: var(--hover);
+    /* Change label color on hover */
+}
+
+.editButtons{
+    display: flex;
+    margin: 5px;
+    gap: 20px;
+    justify-content: center;
+}
+
+.edit {
+    background-color: #008CBA;
+}
+
+.edit:hover {
+    background-color: #007bb5;
+}
+
+.logout {
+    background-color: #f44336;
+}
+
+.logout:hover {
+    background-color: #e41e20;
+}
+
+.center-text {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: end;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#footer {
+    background-color: var(--primary);
+    color: #fff;
+    text-align: center;
+    padding: 50px;
+}

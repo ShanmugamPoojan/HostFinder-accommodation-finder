@@ -248,9 +248,9 @@ function editAccommodation() {
 }
 
 // Cancel Edit (Hide Form and Show List)
-function cancelEdit() {
-    location.reload(); // Reload the page to reset
-}
+// function cancelEdit() {
+//     location.reload(); // Reload the page to reset
+// }
 function cancelEdit() {
     event.preventDefault()
     const accommodationForm = document.getElementById("accommodationForm");
